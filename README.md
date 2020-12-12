@@ -1,2 +1,2 @@
 # logger-messages
-Models for logging messages
+Models for logger messages
