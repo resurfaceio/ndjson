@@ -76,6 +76,17 @@
         </developer>
     </developers>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>cloudsmith</id>
+            <url>https://maven.cloudsmith.io/resurfacelabs/internal/</url>
+        </snapshotRepository>
+        <repository>
+            <id>cloudsmith</id>
+            <url>https://maven.cloudsmith.io/resurfacelabs/internal/</url>
+        </repository>
+    </distributionManagement>
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/resurfaceio/logger-messages/issues</url>
@@ -103,16 +114,5 @@
         <developerConnection>scm:git:git@github.com:resurfaceio/logger-messages.git</developerConnection>
         <url>scm:git:git@github.com:resurfaceio/logger-messages.git</url>
     </scm>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>cloudsmith</id>
-            <url>https://maven.cloudsmith.io/resurfacelabs/internal/</url>
-        </snapshotRepository>
-        <repository>
-            <id>cloudsmith</id>
-            <url>https://maven.cloudsmith.io/resurfacelabs/internal/</url>
-        </repository>
-    </distributionManagement>
 
 </project>
