@@ -106,11 +106,11 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>logger-messages</id>
+            <id>cloudsmith</id>
             <url>https://maven.cloudsmith.io/resurfacelabs/internal/</url>
         </snapshotRepository>
         <repository>
-            <id>logger-messages</id>
+            <id>cloudsmith</id>
             <url>https://maven.cloudsmith.io/resurfacelabs/internal/</url>
         </repository>
     </distributionManagement>
