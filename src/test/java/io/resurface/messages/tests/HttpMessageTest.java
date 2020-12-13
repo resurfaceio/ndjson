@@ -1,4 +1,4 @@
-// © 2016-2019 Resurface Labs Inc.
+// © 2016-2020 Resurface Labs Inc.
 
 package io.resurface.messages.tests;
 
@@ -29,10 +29,7 @@ public class HttpMessageTest {
         list.add("{,}");
         list.add("[");
         list.add("]");
-        list.add("[]");
         list.add("[],");
-        list.add("[ ]");
-        list.add("[ , ]");
         list.add("[ \"A, \"B\"]");
         list.add("[ \"A\",]");
         list.add("[ \"A\", \"B\"][ \"A\", \"B\"]");
@@ -40,7 +37,7 @@ public class HttpMessageTest {
         for (String json : list) {
             HttpMessage e = null;
             try {
-                e = new HttpMessage("{");
+                e = new HttpMessage(json);
                 fail("expected parse exception");
             } catch (IllegalArgumentException iae) {
                 expect(e).toBeNull();
@@ -69,6 +66,7 @@ public class HttpMessageTest {
         expect(m.response_headers().size()).toEqual(0);
         expect(m.response_time_millis()).toEqual(0);
         expect(m.session_fields().size()).toEqual(0);
+        expect(m.toString()).toEqual("[]");
     }
 
     @Test
@@ -96,6 +94,7 @@ public class HttpMessageTest {
                 "]";
 
         HttpMessage m = new HttpMessage(json);
+        m.sort_details();
         expect(m.host()).toEqual("radware");
         expect(m.interval_millis()).toEqual(292);
         expect(m.request_body()).toEqual("{ \"hello\" : \"world\" }");
@@ -125,6 +124,132 @@ public class HttpMessageTest {
         expect(m.session_fields().get(1).get(1)).toEqual("fooval1");
         expect(m.session_fields().get(2).get(0)).toEqual("foo");
         expect(m.session_fields().get(2).get(1)).toEqual("fooval2");
+    }
+
+    @Test
+    public void writeHostTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_host("radware");
+        expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"host\",\"radware\"]]");
+    }
+
+    @Test
+    public void writeIntervalMillisTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_interval_millis(123456789);
+        expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"interval\",123456789]]");
+    }
+
+    @Test
+    public void writeRequestBodyTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_request_body("as if");
+        expect(m.size_request_bytes()).toEqual(5);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"request_body\",\"as if\"]]");
+    }
+
+    @Test
+    public void writeRequestContentTypeTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_request_content_type("text/plain");
+        expect(m.size_request_bytes()).toEqual(22);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"request_header:content-type\",\"text/plain\"]]");
+    }
+
+    @Test
+    public void writeRequestHeadersTest() {
+        HttpMessage m = new HttpMessage();
+        m.add_request_header("Cookie", "Yes");
+        expect(m.size_request_bytes()).toEqual(9);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"request_header:cookie\",\"Yes\"]]");
+    }
+
+    @Test
+    public void writeRequestMethodTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_request_method("GET");
+        expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"request_method\",\"GET\"]]");
+    }
+
+    @Test
+    public void writeRequestParamsTest() {
+        HttpMessage m = new HttpMessage();
+        m.add_request_param("Foo", "100");
+        expect(m.size_request_bytes()).toEqual(6);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"request_param:foo\",\"100\"]]");
+    }
+
+    @Test
+    public void writeRequestUrlTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_request_url("https://resurface.io");
+        expect(m.size_request_bytes()).toEqual(20);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"request_url\",\"https://resurface.io\"]]");
+    }
+
+    @Test
+    public void writeRequestUserAgentTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_request_user_agent("AWS Security Scanner");
+        expect(m.size_request_bytes()).toEqual(30);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"request_header:user-agent\",\"AWS Security Scanner\"]]");
+    }
+
+    @Test
+    public void writeResponseBodyTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_response_body("archer");
+        expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_response_bytes()).toEqual(6);
+        expect(m.toString()).toEqual("[[\"response_body\",\"archer\"]]");
+    }
+
+    @Test
+    public void writeResponseCodeTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_response_code("200");
+        expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"response_code\",\"200\"]]");
+    }
+
+    @Test
+    public void writeResponseContentTypeTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_response_content_type("text/html");
+        expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_response_bytes()).toEqual(21);
+        expect(m.toString()).toEqual("[[\"response_header:content-type\",\"text/html\"]]");
+    }
+
+    @Test
+    public void writeResponseHeadersTest() {
+        HttpMessage m = new HttpMessage();
+        m.add_response_header("Set-Cookie", "Yes");
+        expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_response_bytes()).toEqual(13);
+        expect(m.toString()).toEqual("[[\"response_header:set-cookie\",\"Yes\"]]");
+    }
+
+    @Test
+    public void writeResponseTimeMillisTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_response_time_millis(123456789);
+        expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"now\",123456789]]");
     }
 
 }
