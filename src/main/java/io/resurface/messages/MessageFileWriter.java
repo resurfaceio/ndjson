@@ -32,6 +32,7 @@ public class MessageFileWriter implements AutoCloseable, Closeable, Flushable {
      */
     public void close() {
         try {
+            writer.flush();
             fos.close();
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
