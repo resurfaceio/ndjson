@@ -21,18 +21,27 @@ public class MessageFileWriter implements AutoCloseable, Closeable, Flushable {
 
         try {
             fos = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(new GZIPOutputStream(fos)));
+            gos = new GZIPOutputStream(fos);
+            osw = new OutputStreamWriter(gos);
+            writer = new BufferedWriter(osw);
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
         }
     }
+
+    private final FileOutputStream fos;
+    private final GZIPOutputStream gos;
+    private final OutputStreamWriter osw;
+    private final BufferedWriter writer;
 
     /**
      * Closes file.
      */
     public void close() {
         try {
-            writer.flush();
+            writer.close();
+            osw.close();
+            gos.close();
             fos.close();
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
@@ -45,6 +54,9 @@ public class MessageFileWriter implements AutoCloseable, Closeable, Flushable {
     public void flush() {
         try {
             writer.flush();
+            osw.flush();
+            gos.flush();
+            fos.flush();
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
         }
@@ -61,8 +73,5 @@ public class MessageFileWriter implements AutoCloseable, Closeable, Flushable {
             throw new RuntimeException(ioe);
         }
     }
-
-    private final FileOutputStream fos;
-    private final BufferedWriter writer;
 
 }
