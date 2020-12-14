@@ -7,7 +7,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.reflect.Type;
@@ -420,7 +419,7 @@ public class HttpMessage {
     public String toString() {
         try {
             StringWriter out = new StringWriter();
-            JsonWriter writer = new JsonWriter(new BufferedWriter(out));
+            JsonWriter writer = new JsonWriter(out);
             write(writer).flush();
             return out.toString();
         } catch (IOException ioe) {
