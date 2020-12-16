@@ -225,9 +225,18 @@ public class HttpMessage {
     }
 
     /**
+     * Sets list of generic request headers in JSON format.
+     */
+    public void set_request_headers_json(String json) {
+        ArrayList<ArrayList<String>> details = GSON.fromJson(json, GSON_ARRAYLIST_TYPE);
+        request_headers.clear();
+        for (ArrayList<String> detail : details) add_request_header(detail.get(0), detail.get(1));
+    }
+
+    /**
      * Returns a list of generic request headers, in JSON format.
      */
-    public String request_headers_as_json() {
+    public String request_headers_json() {
         return as_json(request_headers);
     }
 
@@ -246,16 +255,25 @@ public class HttpMessage {
     }
 
     /**
-     * Returns a list of generic request parameters.
+     * Returns a list of request parameters.
      */
     public List<ArrayList<String>> request_params() {
         return request_params;
     }
 
     /**
-     * Returns a list of generic request parameters, in JSON format.
+     * Sets list of request parameters in JSON format.
      */
-    public String request_params_as_json() {
+    public void set_request_params_json(String json) {
+        ArrayList<ArrayList<String>> details = GSON.fromJson(json, GSON_ARRAYLIST_TYPE);
+        request_params.clear();
+        for (ArrayList<String> detail : details) add_request_param(detail.get(0), detail.get(1));
+    }
+
+    /**
+     * Returns a list of request parameters, in JSON format.
+     */
+    public String request_params_json() {
         return as_json(request_params);
     }
 
@@ -337,9 +355,18 @@ public class HttpMessage {
     }
 
     /**
+     * Sets list of generic response headers in JSON format.
+     */
+    public void set_response_headers_json(String json) {
+        ArrayList<ArrayList<String>> details = GSON.fromJson(json, GSON_ARRAYLIST_TYPE);
+        response_headers.clear();
+        for (ArrayList<String> detail : details) add_response_header(detail.get(0), detail.get(1));
+    }
+
+    /**
      * Returns a list of generic response parameters, in JSON format.
      */
-    public String response_headers_as_json() {
+    public String response_headers_json() {
         return as_json(response_headers);
     }
 
@@ -358,17 +385,26 @@ public class HttpMessage {
     }
 
     /**
-     * Returns a list of generic session fields.
+     * Returns a list of session fields.
      */
     public List<ArrayList<String>> session_fields() {
         return session_fields;
     }
 
     /**
-     * Returns a list of generic session fields, in JSON format.
+     * Returns a list of session fields, in JSON format.
      */
-    public String session_fields_as_json() {
+    public String session_fields_json() {
         return as_json(session_fields);
+    }
+
+    /**
+     * Sets list of session fields in JSON format.
+     */
+    public void set_session_fields_json(String json) {
+        ArrayList<ArrayList<String>> details = GSON.fromJson(json, GSON_ARRAYLIST_TYPE);
+        session_fields.clear();
+        for (ArrayList<String> detail : details) add_session_field(detail.get(0), detail.get(1));
     }
 
     /**

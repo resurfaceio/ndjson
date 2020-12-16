@@ -165,9 +165,10 @@ public class HttpMessageTest {
     @Test
     public void writeRequestHeadersTest() {
         HttpMessage m = new HttpMessage();
-        m.add_request_header("Cookie", "Yes");
+        m.set_request_headers_json("[[\"Cookie\",\"Yes\"]]");
         expect(m.size_request_bytes()).toEqual(9);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.request_headers_json()).toEqual("[[\"cookie\",\"Yes\"]]");
         expect(m.toString()).toEqual("[[\"request_header:cookie\",\"Yes\"]]");
     }
 
@@ -183,9 +184,10 @@ public class HttpMessageTest {
     @Test
     public void writeRequestParamsTest() {
         HttpMessage m = new HttpMessage();
-        m.add_request_param("Foo", "100");
+        m.set_request_params_json("[[\"Foo\",\"100\"]]");
         expect(m.size_request_bytes()).toEqual(6);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.request_params_json()).toEqual("[[\"foo\",\"100\"]]");
         expect(m.toString()).toEqual("[[\"request_param:foo\",\"100\"]]");
     }
 
@@ -237,9 +239,10 @@ public class HttpMessageTest {
     @Test
     public void writeResponseHeadersTest() {
         HttpMessage m = new HttpMessage();
-        m.add_response_header("Set-Cookie", "Yes");
+        m.set_response_headers_json("[[\"Set-Cookie\",\"Yes\"]]");
         expect(m.size_request_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(13);
+        expect(m.response_headers_json()).toEqual("[[\"set-cookie\",\"Yes\"]]");
         expect(m.toString()).toEqual("[[\"response_header:set-cookie\",\"Yes\"]]");
     }
 
