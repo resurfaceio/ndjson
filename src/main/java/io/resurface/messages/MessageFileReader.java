@@ -16,8 +16,8 @@ public class MessageFileReader implements AutoCloseable, Closeable {
     public MessageFileReader(String file) {
         if (!file.endsWith(".ndjson.gz"))
             throw new IllegalArgumentException("File is not .ndjson.gz format");
-
-        // todo throw exception if file doesn't already exist?
+        if (!new File(file).exists())
+            throw new IllegalArgumentException("File not found: " + file);
 
         this.file = file;
     }

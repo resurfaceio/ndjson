@@ -16,8 +16,8 @@ public class MessageFileWriter implements AutoCloseable, Closeable, Flushable {
     public MessageFileWriter(String file) {
         if (!file.endsWith(".ndjson.gz"))
             throw new IllegalArgumentException("File is not .ndjson.gz format");
-
-        // todo throw exception if file already exists?
+        if (new File(file).exists())
+            throw new IllegalArgumentException("File already exists: " + file);
 
         try {
             fos = new FileOutputStream(file);
