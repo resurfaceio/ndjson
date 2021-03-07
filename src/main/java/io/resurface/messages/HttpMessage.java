@@ -58,7 +58,7 @@ public class HttpMessage {
                 break;
             case "interval":
             case "interval_millis":
-                interval_millis = (long) Float.parseFloat(value);
+                interval_millis = value.startsWith("0.") ? 1 : (long) Float.parseFloat(value);
                 break;
             case "now":
             case "response_time_millis":

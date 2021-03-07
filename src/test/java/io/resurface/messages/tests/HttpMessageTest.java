@@ -127,6 +127,13 @@ public class HttpMessageTest {
     }
 
     @Test
+    public void parseZeroIntervalJsonTest() {
+        String json = "[[\"interval\", \"0.836995\"]]";
+        HttpMessage m = new HttpMessage(json);
+        expect(m.interval_millis()).toEqual(1);
+    }
+
+    @Test
     public void writeHostTest() {
         HttpMessage m = new HttpMessage();
         m.set_host("radware");
