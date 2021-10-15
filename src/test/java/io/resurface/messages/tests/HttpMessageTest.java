@@ -51,8 +51,10 @@ public class HttpMessageTest {
     public void parseMinimalJsonTest() {
         String json = "[[\"xyz\", \"123\"]]";
         HttpMessage m = new HttpMessage(json);
+        expect(m.custom_fields().size()).toEqual(0);
         expect(m.host()).toBeNull();
         expect(m.interval_millis()).toEqual(0);
+        expect(m.request_address()).toBeNull();
         expect(m.request_body()).toBeNull();
         expect(m.request_content_type()).toBeNull();
         expect(m.request_headers().size()).toEqual(0);
@@ -72,6 +74,7 @@ public class HttpMessageTest {
     @Test
     public void parseValidJsonTest() {
         String json = "[" +
+                "[\"custom_field:Foo\", \"Bar\"]," +
                 "[\"host\", \"radware\"]," +
                 "[\"interval\", \"292.836995\"]," +
                 "[\"now\", \"1492836995761\"]," +
@@ -80,6 +83,7 @@ public class HttpMessageTest {
                 "[\"request_header:b\", \"1\"]," +
                 "[\"request_header:content-type\", \"Application/JSON\"]," +
                 "[\"request_header:user-agent\",\"Mozilla/5.0 (Ubuntu)...\"]," +
+                "[\"request_header:x-forwarded-for\", \"127.0.0.1\"]," +
                 "[\"request_method\", \"POST\"]," +
                 "[\"request_param:x22\", \"x22value\"]," +
                 "[\"request_param:p1\", \"pvalue1\"]," +
@@ -95,6 +99,9 @@ public class HttpMessageTest {
 
         HttpMessage m = new HttpMessage(json);
         m.sort_details();
+        expect(m.custom_fields().size()).toEqual(1);
+        expect(m.custom_fields().get(0).get(0)).toEqual("foo");
+        expect(m.custom_fields().get(0).get(1)).toEqual("Bar");
         expect(m.host()).toEqual("radware");
         expect(m.interval_millis()).toEqual(292);
         expect(m.request_body()).toEqual("{ \"hello\" : \"world\" }");
@@ -131,6 +138,14 @@ public class HttpMessageTest {
         String json = "[[\"interval\", \"0.836995\"]]";
         HttpMessage m = new HttpMessage(json);
         expect(m.interval_millis()).toEqual(1);
+    }
+
+    @Test
+    public void writeCustomFieldTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_custom_fields_json("[[\"Foo\",\"Bar\"]]");
+        expect(m.custom_fields_json()).toEqual("[[\"foo\",\"Bar\"]]");
+        expect(m.toString()).toEqual("[[\"custom_field:foo\",\"Bar\"]]");
     }
 
     @Test
@@ -260,6 +275,14 @@ public class HttpMessageTest {
         expect(m.size_request_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"now\",123456789]]");
+    }
+
+    @Test
+    public void writeSessionFieldTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_session_fields_json("[[\"Foo\",\"Bar\"]]");
+        expect(m.session_fields_json()).toEqual("[[\"foo\",\"Bar\"]]");
+        expect(m.toString()).toEqual("[[\"session_field:foo\",\"Bar\"]]");
     }
 
 }

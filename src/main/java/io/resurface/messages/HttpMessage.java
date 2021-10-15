@@ -92,8 +92,21 @@ public class HttpMessage {
                 } else if (key.startsWith("session_")) {
                     key = key.substring(14);
                     add_session_field(key, value);
+                } else if (key.startsWith("custom_")) {
+                    key = key.substring(13);
+                    add_custom_field(key, value);
                 }
         }
+    }
+
+    /**
+     * Adds custom field to the message.
+     */
+    public void add_custom_field(String name, String value) {
+        ArrayList<String> list = new ArrayList<>();
+        list.add(name.toLowerCase());
+        list.add(value);
+        custom_fields.add(list);
     }
 
     /**
@@ -104,6 +117,10 @@ public class HttpMessage {
             request_content_type = value;
         } else if (name.equalsIgnoreCase("user-agent")) {
             request_user_agent = value;
+        } else if (name.equalsIgnoreCase("cf-connecting-ip") || name.equalsIgnoreCase("fastly-client-ip")
+                || name.equalsIgnoreCase("forwarded") || name.equalsIgnoreCase("forwarded-for")
+                || name.equalsIgnoreCase("true-client-ip") || name.equalsIgnoreCase("x-forwarded-for")) {
+            request_address = value;
         } else {
             ArrayList<String> list = new ArrayList<>();
             list.add(name.toLowerCase());
@@ -162,6 +179,29 @@ public class HttpMessage {
     }
 
     /**
+     * Returns a list of custom fields.
+     */
+    public List<ArrayList<String>> custom_fields() {
+        return custom_fields;
+    }
+
+    /**
+     * Returns a list of custom fields, in JSON format.
+     */
+    public String custom_fields_json() {
+        return as_json(custom_fields);
+    }
+
+    /**
+     * Sets list of custom fields in JSON format.
+     */
+    public void set_custom_fields_json(String json) {
+        ArrayList<ArrayList<String>> details = GSON.fromJson(json, GSON_ARRAYLIST_TYPE);
+        custom_fields.clear();
+        for (ArrayList<String> detail : details) add_custom_field(detail.get(0), detail.get(1));
+    }
+
+    /**
      * Returns the host that responded to the API call.
      */
     public String host() {
@@ -187,6 +227,20 @@ public class HttpMessage {
      */
     public void set_interval_millis(long interval_millis) {
         this.interval_millis = interval_millis;
+    }
+
+    /**
+     * Returns the value of the request address.
+     */
+    public String request_address() {
+        return request_address;
+    }
+
+    /**
+     * Sets the value of the request address.
+     */
+    public void set_request_address(String request_address) {
+        this.request_address = request_address;
     }
 
     /**
@@ -411,6 +465,7 @@ public class HttpMessage {
      * Sorts detail lists.
      */
     public void sort_details() {
+        custom_fields.sort(COMPARATOR);
         request_headers.sort(COMPARATOR);
         request_params.sort(COMPARATOR);
         response_headers.sort(COMPARATOR);
@@ -469,6 +524,8 @@ public class HttpMessage {
     public JsonWriter write(JsonWriter writer) {
         try {
             writer.beginArray();
+
+            // v2 details
             if (host != null) write(writer, "host", host);
             if (interval_millis != 0) write(writer, "interval", interval_millis);
             if (request_body != null) write(writer, "request_body", request_body);
@@ -483,6 +540,12 @@ public class HttpMessage {
             if (response_content_type != null) write(writer, "response_header:content-type", response_content_type);
             for (ArrayList<String> i : response_headers) write(writer, "response_header:" + i.get(0), i.get(1));
             if (response_time_millis != 0) write(writer, "now", response_time_millis);
+
+            // v3 details
+            for (ArrayList<String> i : custom_fields) write(writer, "custom_field:" + i.get(0), i.get(1));
+            if (request_address != null) write(writer, "request_address", request_address);
+            for (ArrayList<String> i : session_fields) write(writer, "session_field:" + i.get(0), i.get(1));
+
             return writer.endArray();
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
@@ -509,6 +572,7 @@ public class HttpMessage {
         writer.endArray();
     }
 
+    // v2 details
     private String host;
     private long interval_millis;
     private String request_body;
@@ -523,6 +587,10 @@ public class HttpMessage {
     private String response_content_type;
     private final List<ArrayList<String>> response_headers = new ArrayList<>();
     private long response_time_millis;
+
+    // v3 details
+    private final List<ArrayList<String>> custom_fields = new ArrayList<>();
+    private String request_address;
     private final List<ArrayList<String>> session_fields = new ArrayList<>();
 
     private static final Comparator<ArrayList<String>> COMPARATOR = Comparator.comparing(e -> e.get(0));
