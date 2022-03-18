@@ -119,7 +119,9 @@ public class HttpMessage {
             request_user_agent = value;
         } else if (name.equalsIgnoreCase("cf-connecting-ip") || name.equalsIgnoreCase("fastly-client-ip")
                 || name.equalsIgnoreCase("forwarded") || name.equalsIgnoreCase("forwarded-for")
-                || name.equalsIgnoreCase("true-client-ip") || name.equalsIgnoreCase("x-forwarded-for")) {
+                || name.equalsIgnoreCase("true-client-ip") || name.equalsIgnoreCase("x-forwarded-for")
+                || name.equalsIgnoreCase("x-client-ip") || name.equalsIgnoreCase("x-real-ip")
+                || name.equalsIgnoreCase("x-cluster-client-ip")) {
             request_address = value;
         } else {
             ArrayList<String> list = new ArrayList<>();
