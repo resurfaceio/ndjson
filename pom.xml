@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.resurface</groupId>
-    <artifactId>resurfaceio-logger-messages</artifactId>
-    <version>3.1.1</version>
-    <name>resurfaceio-logger-messages</name>
-    <description>Models for logger messages</description>
-    <url>https://github.com/resurfaceio/logger-messages</url>
+    <artifactId>resurfaceio-ndjson</artifactId>
+    <version>3.3.1</version>
+    <name>resurfaceio-ndjson</name>
+    <description>Readers &amp; writers for NDJSON files</description>
+    <url>https://github.com/resurfaceio/ndjson</url>
 
     <build>
         <plugins>
@@ -18,8 +18,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>17</source>
+                    <target>17</target>
                     <optimize>true</optimize>
                     <debug>true</debug>
                 </configuration>
@@ -87,9 +87,9 @@
     </organization>
 
     <scm>
-        <connection>scm:git:git@github.com:resurfaceio/logger-messages.git</connection>
-        <developerConnection>scm:git:git@github.com:resurfaceio/logger-messages.git</developerConnection>
-        <url>scm:git:git@github.com:resurfaceio/logger-messages.git</url>
+        <connection>scm:git:git@github.com:resurfaceio/ndjson.git</connection>
+        <developerConnection>scm:git:git@github.com:resurfaceio/ndjson.git</developerConnection>
+        <url>scm:git:git@github.com:resurfaceio/ndjson.git</url>
     </scm>
 
 </project>

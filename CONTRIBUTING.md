@@ -1,4 +1,4 @@
-# Contributing to resurfaceio-logger-messages
+# Contributing to resurfaceio-ndjson
 &copy; 2016-2022 Resurface Labs Inc.
 
 ## Coding Conventions
@@ -11,8 +11,8 @@ If you don't use IDEA, that's ok, but your code may get reformatted.
 Initial setup:
 
 ```
-git clone git@github.com:resurfaceio/logger-messages.git resurfaceio-logger-messages
-cd resurfaceio-logger-messages
+git clone git@github.com:resurfaceio/ndjson.git resurfaceio-ndjson
+cd resurfaceio-ndjson
 ```
 
 Test and package:
@@ -47,8 +47,8 @@ mvn deploy
 Tag release version:
 
 ```
-git tag v3.1.(BUILD_NUMBER)
-git push origin v3.1.x --tags
+git tag v3.3.(BUILD_NUMBER)
+git push origin v3.3.x --tags
 ```
 
 Start the next version by incrementing the version number. (located in pom.xml)

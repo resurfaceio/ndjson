@@ -1,7 +1,7 @@
-# resurfaceio-logger-messages
-Utils for logger messages
+# resurfaceio-ndjson
+Readers &amp; writers for NDJSON files
 
 ## System requirements
 
-* Java 11
+* Java 17
 * Maven
