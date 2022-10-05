@@ -43,3 +43,6 @@ This library is used by the Resurface database, for parsing messages from logger
 This library is also used by the open source [importer](https://github.com/resurfaceio/importer) utility, which reads 
 compressed NDJSON files and loads them into a remote Resurface database. This is a great example of reading and processing 
 NDJSON files in Resurface format, and is completely open source.
+
+---
+<small>&copy; 2016-2022 <a href="https://resurface.io">Resurface Labs Inc.</a></small>
