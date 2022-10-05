@@ -17,7 +17,10 @@ provides a write interface to generate compatible NDJSON files or payloads progr
 
 ## Installing with Maven
 
-Add these sections to `pom.xml`:
+⚠️ We publish our official binaries on [CloudSmith](https://cloudsmith.com) rather than Maven Central,
+because CloudSmith is awesome.
+
+Simply add these sections to `pom.xml` to install:
 
 ```xml
 <dependency>
@@ -28,13 +31,18 @@ Add these sections to `pom.xml`:
 ```
 
 ```xml
-<distributionManagement>
+<repositories>
     <repository>
-        <id>cloudsmith</id>
-        <url>https://maven.cloudsmith.io/resurfacelabs/public/</url>
+        <id>resurfacelabs-public</id>
+        <url>https://dl.cloudsmith.io/public/resurfacelabs/public/maven/</url>
+        <releases>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </releases>
     </repository>
-</distributionManagement>
+</repositories>
 ```
+
 
 ## Usage
 
