@@ -13,7 +13,7 @@ provides a write interface to generate compatible NDJSON files or payloads progr
 ## Dependencies
 
 * Java 11
-* GSON (not included)
+* GSON
 
 ## Installing with Maven
 
