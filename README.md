@@ -38,7 +38,7 @@ Add these sections to `pom.xml`:
 
 ## Usage
 
-This library is used by the Resurface database, for parsing log messages from loggers, and for generating export files.
+This library is used by the Resurface database, for parsing messages from loggers, and for writing export files.
 
 This library is also used by the open source [importer](https://github.com/resurfaceio/importer) utility, which reads 
 compressed NDJSON files and loads them into a remote Resurface database. This is a great example of reading and processing 
