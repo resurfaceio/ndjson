@@ -43,7 +43,6 @@ Simply add these sections to `pom.xml` to install:
 </repositories>
 ```
 
-
 ## Usage
 
 This library is used by the Resurface database, for parsing messages from loggers, and for writing export files.
