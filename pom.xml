@@ -69,11 +69,11 @@
     <distributionManagement>
         <snapshotRepository>
             <id>cloudsmith</id>
-            <url>https://maven.cloudsmith.io/resurfacelabs/internal/</url>
+            <url>https://maven.cloudsmith.io/resurfacelabs/public/</url>
         </snapshotRepository>
         <repository>
             <id>cloudsmith</id>
-            <url>https://maven.cloudsmith.io/resurfacelabs/internal/</url>
+            <url>https://maven.cloudsmith.io/resurfacelabs/public/</url>
         </repository>
     </distributionManagement>
 
