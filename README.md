@@ -10,6 +10,14 @@ provides a write interface to generate compatible NDJSON files or payloads progr
 [![License](https://img.shields.io/github/license/resurfaceio/ndjson)](https://github.com/resurfaceio/ndjson/blob/v3.3.x/LICENSE)
 [![Contributing](https://img.shields.io/badge/contributions-welcome-green.svg)](https://github.com/resurfaceio/ndjson/blob/v3.3.x/CONTRIBUTING.md)
 
+## Usage
+
+This library is used by the Resurface database, for parsing messages from loggers, and for writing export files.
+
+This library is also used by the open source [importer](https://github.com/resurfaceio/importer) utility, which reads
+compressed NDJSON files and loads them into a remote Resurface database. This is a great example of reading and processing
+NDJSON files in Resurface format, and is completely open source.
+
 ## Dependencies
 
 * Java 11
@@ -42,14 +50,6 @@ Simply add these sections to `pom.xml` to install:
     </repository>
 </repositories>
 ```
-
-## Usage
-
-This library is used by the Resurface database, for parsing messages from loggers, and for writing export files.
-
-This library is also used by the open source [importer](https://github.com/resurfaceio/importer) utility, which reads 
-compressed NDJSON files and loads them into a remote Resurface database. This is a great example of reading and processing 
-NDJSON files in Resurface format, and is completely open source.
 
 ---
 <small>&copy; 2016-2022 <a href="https://resurface.io">Resurface Labs Inc.</a></small>
