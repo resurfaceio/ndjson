@@ -104,6 +104,7 @@ public class HttpMessageTest {
         expect(m.custom_fields().get(0).get(1)).toEqual("Bar");
         expect(m.host()).toEqual("radware");
         expect(m.interval_millis()).toEqual(292);
+        expect(m.request_address()).toEqual("127.0.0.1");
         expect(m.request_body()).toEqual("{ \"hello\" : \"world\" }");
         expect(m.request_content_type()).toEqual("Application/JSON");
         expect(m.request_headers().size()).toEqual(2);
@@ -164,6 +165,15 @@ public class HttpMessageTest {
         expect(m.size_request_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"interval\",123456789]]");
+    }
+
+    @Test
+    public void writeRequestAddressTest() {
+        HttpMessage m = new HttpMessage();
+        m.set_request_address("127.0.0.1");
+        expect(m.size_request_bytes()).toEqual(24);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"request_header:x-forwarded-for\",\"127.0.0.1\"]]");
     }
 
     @Test

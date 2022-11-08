@@ -479,6 +479,7 @@ public class HttpMessage {
      */
     public int size_request_bytes() {
         int result = 0;
+        if (request_address != null) result += 15 + request_address.length();
         if (request_body != null) result += request_body.length();
         if (request_content_type != null) result += 12 + request_content_type.length();
         for (ArrayList<String> i : request_headers) result += i.get(0).length() + i.get(1).length();
@@ -545,7 +546,7 @@ public class HttpMessage {
 
             // v3 details
             for (ArrayList<String> i : custom_fields) write(writer, "custom_field:" + i.get(0), i.get(1));
-            if (request_address != null) write(writer, "request_address", request_address);
+            if (request_address != null) write(writer, "request_header:x-forwarded-for", request_address);
             for (ArrayList<String> i : session_fields) write(writer, "session_field:" + i.get(0), i.get(1));
 
             return writer.endArray();
