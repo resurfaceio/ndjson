@@ -34,7 +34,7 @@ Simply add these sections to `pom.xml` to install:
 <dependency>
     <groupId>io.resurface</groupId>
     <artifactId>resurfaceio-ndjson</artifactId>
-    <version>3.3.4</version>
+    <version>3.3.5</version>
 </dependency>
 ```
 
