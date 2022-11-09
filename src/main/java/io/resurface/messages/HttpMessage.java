@@ -120,8 +120,8 @@ public class HttpMessage {
         } else if (name.equalsIgnoreCase("cf-connecting-ip") || name.equalsIgnoreCase("fastly-client-ip")
                 || name.equalsIgnoreCase("forwarded") || name.equalsIgnoreCase("forwarded-for")
                 || name.equalsIgnoreCase("true-client-ip") || name.equalsIgnoreCase("x-forwarded-for")
-                || name.equalsIgnoreCase("x-forwarded-host") || name.equalsIgnoreCase("x-client-ip")
-                || name.equalsIgnoreCase("x-real-ip") || name.equalsIgnoreCase("x-cluster-client-ip")) {
+                || name.equalsIgnoreCase("x-client-ip") || name.equalsIgnoreCase("x-real-ip")
+                || name.equalsIgnoreCase("x-cluster-client-ip")) {
             request_address = value;
         } else {
             ArrayList<String> list = new ArrayList<>();
