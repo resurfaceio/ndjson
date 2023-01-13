@@ -113,21 +113,30 @@ public class HttpMessage {
      * Adds request header to the message.
      */
     public void add_request_header(String name, String value) {
-        if (name.equalsIgnoreCase("content-type")) {
-            request_content_type = value;
-        } else if (name.equalsIgnoreCase("user-agent")) {
-            request_user_agent = value;
-        } else if (name.equalsIgnoreCase("cf-connecting-ip") || name.equalsIgnoreCase("fastly-client-ip")
-                || name.equalsIgnoreCase("forwarded") || name.equalsIgnoreCase("forwarded-for")
-                || name.equalsIgnoreCase("true-client-ip") || name.equalsIgnoreCase("x-forwarded-for")
-                || name.equalsIgnoreCase("x-client-ip") || name.equalsIgnoreCase("x-real-ip")
-                || name.equalsIgnoreCase("x-cluster-client-ip")) {
-            request_address = value;
-        } else {
-            ArrayList<String> list = new ArrayList<>();
-            list.add(name.toLowerCase());
-            list.add(value);
-            request_headers.add(list);
+        String name_lower = name.toLowerCase();
+        switch (name_lower) {
+            case "content-type":
+                request_content_type = value;
+                break;
+            case "user-agent":
+                request_user_agent = value;
+                break;
+            case "cf-connecting-ip":
+            case "fastly-client-ip":
+            case "forwarded":
+            case "forwarded-for":
+            case "true-client-ip":
+            case "x-forwarded-for":
+            case "x-client-ip":
+            case "x-real-ip":
+            case "x-cluster-client-ip":
+                request_address = value;
+                break;
+            default:
+                ArrayList<String> list = new ArrayList<>();
+                list.add(name_lower);
+                list.add(value);
+                request_headers.add(list);
         }
     }
 
