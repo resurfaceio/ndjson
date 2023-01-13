@@ -1,8 +1,8 @@
 // © 2016-2023 Resurface Labs Inc.
 
-package io.resurface.messages.tests;
+package io.resurface.ndjson.tests;
 
-import io.resurface.messages.HttpMessage;
+import io.resurface.ndjson.HttpMessage;
 import org.junit.Test;
 
 import java.util.ArrayList;

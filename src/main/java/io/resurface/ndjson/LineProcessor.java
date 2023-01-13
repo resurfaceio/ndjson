@@ -1,6 +1,6 @@
 // © 2016-2023 Resurface Labs Inc.
 
-package io.resurface.messages;
+package io.resurface.ndjson;
 
 /**
  * Processes raw lines.

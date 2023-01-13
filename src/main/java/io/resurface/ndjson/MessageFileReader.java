@@ -1,6 +1,6 @@
 // © 2016-2023 Resurface Labs Inc.
 
-package io.resurface.messages;
+package io.resurface.ndjson;
 
 import java.io.*;
 import java.util.zip.GZIPInputStream;
