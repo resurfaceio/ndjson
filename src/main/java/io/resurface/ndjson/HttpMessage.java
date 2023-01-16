@@ -127,6 +127,7 @@ public class HttpMessage {
             case "forwarded-for":
             case "true-client-ip":
             case "x-forwarded-for":
+            case "x-forwarded":
             case "x-client-ip":
             case "x-real-ip":
             case "x-cluster-client-ip":
