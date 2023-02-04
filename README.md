@@ -20,7 +20,7 @@ NDJSON files in Resurface format, and is completely open source.
 
 ## Dependencies
 
-* Java 11
+* Java 17
 * [google/gson](https://github.com/google/gson)
 
 ## Installing with Maven
