@@ -154,7 +154,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_host("radware");
         expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_request_headers_bytes()).toEqual(0);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"host\",\"radware\"]]");
     }
 
@@ -163,7 +166,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_interval_millis(123456789);
         expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_request_headers_bytes()).toEqual(0);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"interval\",123456789]]");
     }
 
@@ -172,7 +178,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_request_address("127.0.0.1");
         expect(m.size_request_bytes()).toEqual(24);
+        expect(m.size_request_headers_bytes()).toEqual(24);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"request_header:x-forwarded-for\",\"127.0.0.1\"]]");
     }
 
@@ -181,7 +190,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_request_body("as if");
         expect(m.size_request_bytes()).toEqual(5);
+        expect(m.size_request_headers_bytes()).toEqual(0);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"request_body\",\"as if\"]]");
     }
 
@@ -190,7 +202,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_request_content_type("text/plain");
         expect(m.size_request_bytes()).toEqual(22);
+        expect(m.size_request_headers_bytes()).toEqual(22);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"request_header:content-type\",\"text/plain\"]]");
     }
 
@@ -199,7 +214,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_request_headers_json("[[\"Cookie\",\"Yes\"]]");
         expect(m.size_request_bytes()).toEqual(9);
+        expect(m.size_request_headers_bytes()).toEqual(9);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.request_headers_json()).toEqual("[[\"cookie\",\"Yes\"]]");
         expect(m.toString()).toEqual("[[\"request_header:cookie\",\"Yes\"]]");
     }
@@ -209,7 +227,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_request_method("GET");
         expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_request_headers_bytes()).toEqual(0);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"request_method\",\"GET\"]]");
     }
 
@@ -218,7 +239,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_request_params_json("[[\"Foo\",\"100\"]]");
         expect(m.size_request_bytes()).toEqual(6);
+        expect(m.size_request_headers_bytes()).toEqual(0);
+        expect(m.size_request_params_bytes()).toEqual(6);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.request_params_json()).toEqual("[[\"foo\",\"100\"]]");
         expect(m.toString()).toEqual("[[\"request_param:foo\",\"100\"]]");
     }
@@ -228,7 +252,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_request_url("https://resurface.io");
         expect(m.size_request_bytes()).toEqual(20);
+        expect(m.size_request_headers_bytes()).toEqual(0);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"request_url\",\"https://resurface.io\"]]");
     }
 
@@ -237,7 +264,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_request_user_agent("AWS Security Scanner");
         expect(m.size_request_bytes()).toEqual(30);
+        expect(m.size_request_headers_bytes()).toEqual(30);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"request_header:user-agent\",\"AWS Security Scanner\"]]");
     }
 
@@ -246,7 +276,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_response_body("archer");
         expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_request_headers_bytes()).toEqual(0);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(6);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"response_body\",\"archer\"]]");
     }
 
@@ -255,7 +288,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_response_code("200");
         expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_request_headers_bytes()).toEqual(0);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"response_code\",\"200\"]]");
     }
 
@@ -264,7 +300,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_response_content_type("text/html");
         expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_request_headers_bytes()).toEqual(0);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(21);
+        expect(m.size_response_headers_bytes()).toEqual(21);
         expect(m.toString()).toEqual("[[\"response_header:content-type\",\"text/html\"]]");
     }
 
@@ -273,7 +312,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_response_headers_json("[[\"Set-Cookie\",\"Yes\"]]");
         expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_request_headers_bytes()).toEqual(0);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(13);
+        expect(m.size_response_headers_bytes()).toEqual(13);
         expect(m.response_headers_json()).toEqual("[[\"set-cookie\",\"Yes\"]]");
         expect(m.toString()).toEqual("[[\"response_header:set-cookie\",\"Yes\"]]");
     }
@@ -283,7 +325,10 @@ public class HttpMessageTest {
         HttpMessage m = new HttpMessage();
         m.set_response_time_millis(123456789);
         expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_request_headers_bytes()).toEqual(0);
+        expect(m.size_request_params_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
+        expect(m.size_response_headers_bytes()).toEqual(0);
         expect(m.toString()).toEqual("[[\"now\",123456789]]");
     }
 

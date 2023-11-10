@@ -489,13 +489,31 @@ public class HttpMessage {
      */
     public int size_request_bytes() {
         int result = 0;
-        if (request_address != null) result += 15 + request_address.length();
         if (request_body != null) result += request_body.length();
+        result += size_request_headers_bytes();
+        result += size_request_params_bytes();
+        if (request_url != null) result += request_url.length();
+        return result;
+    }
+
+    /**
+     * Returns the approximate size of the request headers.
+     */
+    public int size_request_headers_bytes() {
+        int result = 0;
+        if (request_address != null) result += 15 + request_address.length();
         if (request_content_type != null) result += 12 + request_content_type.length();
         for (ArrayList<String> i : request_headers) result += i.get(0).length() + i.get(1).length();
-        for (ArrayList<String> i : request_params) result += i.get(0).length() + i.get(1).length();
-        if (request_url != null) result += request_url.length();
         if (request_user_agent != null) result += 10 + request_user_agent.length();
+        return result;
+    }
+
+    /**
+     * Returns the approximate size of the request params.
+     */
+    public int size_request_params_bytes() {
+        int result = 0;
+        for (ArrayList<String> i : request_params) result += i.get(0).length() + i.get(1).length();
         return result;
     }
 
@@ -505,6 +523,15 @@ public class HttpMessage {
     public int size_response_bytes() {
         int result = 0;
         if (response_body != null) result += response_body.length();
+        result += size_response_headers_bytes();
+        return result;
+    }
+
+    /**
+     * Returns the approximate size of the response headers.
+     */
+    public int size_response_headers_bytes() {
+        int result = 0;
         if (response_content_type != null) result += 12 + response_content_type.length();
         for (ArrayList<String> i : response_headers) result += i.get(0).length() + i.get(1).length();
         return result;
