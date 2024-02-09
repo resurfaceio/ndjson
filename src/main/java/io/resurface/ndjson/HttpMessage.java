@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
+import io.resurface.ndjson.formats.APIConnect;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -30,9 +31,21 @@ public class HttpMessage {
      * Parses message details from specified JSON.
      */
     public HttpMessage(String json) {
+        this(json, "");
+    }
+
+    /**
+     * Parses message details from specified JSON with specified source format
+     */
+    public HttpMessage(String json, String source) {
         try {
-            ArrayList<ArrayList<String>> details = GSON.fromJson(json, GSON_ARRAYLIST_TYPE);
-            for (ArrayList<String> detail : details) add(detail);
+            switch (source) {
+                case "ibm" -> GSON.fromJson(json, APIConnect.class).initialize(this);
+                default -> {
+                    ArrayList<ArrayList<String>> details = GSON.fromJson(json, GSON_ARRAYLIST_TYPE);
+                    for (ArrayList<String> detail : details) add(detail);
+                }
+            }
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid json message", e);
         }
