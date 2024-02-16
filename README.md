@@ -7,8 +7,8 @@ compatible logger, as well as parsing NDJSON files exported from the Resurface d
 provides a write interface to generate compatible NDJSON files or payloads programmatically.
 
 [![CodeFactor](https://www.codefactor.io/repository/github/resurfaceio/ndjson/badge)](https://www.codefactor.io/repository/github/resurfaceio/ndjson)
-[![License](https://img.shields.io/github/license/resurfaceio/ndjson)](https://github.com/resurfaceio/ndjson/blob/v3.5.x/LICENSE)
-[![Contributing](https://img.shields.io/badge/contributions-welcome-green.svg)](https://github.com/resurfaceio/ndjson/blob/v3.5.x/CONTRIBUTING.md)
+[![License](https://img.shields.io/github/license/resurfaceio/ndjson)](https://github.com/resurfaceio/ndjson/blob/v3.6.x/LICENSE)
+[![Contributing](https://img.shields.io/badge/contributions-welcome-green.svg)](https://github.com/resurfaceio/ndjson/blob/v3.6.x/CONTRIBUTING.md)
 
 ## Usage
 
@@ -34,7 +34,7 @@ Simply add these sections to `pom.xml` to install:
 <dependency>
     <groupId>io.resurface</groupId>
     <artifactId>resurfaceio-ndjson</artifactId>
-    <version>3.5.3</version>
+    <version>3.6.2</version>
 </dependency>
 ```
 
