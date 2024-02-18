@@ -3,6 +3,7 @@
 package io.resurface.ndjson.tests;
 
 import io.resurface.ndjson.HttpMessage;
+import io.resurface.ndjson.HttpMessages;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class HttpMessageTest {
         for (String json : list) {
             HttpMessage e = null;
             try {
-                e = new HttpMessage(json);
+                e = HttpMessages.parse(json);
                 fail("expected parse exception");
             } catch (IllegalArgumentException iae) {
                 expect(e).toBeNull();
@@ -50,7 +51,7 @@ public class HttpMessageTest {
     @Test
     public void parseMinimalJsonTest() {
         String json = "[[\"xyz\", \"123\"]]";
-        HttpMessage m = new HttpMessage(json);
+        HttpMessage m = HttpMessages.parse(json);
         expect(m.custom_fields().size()).toEqual(0);
         expect(m.host()).toBeNull();
         expect(m.interval_millis()).toEqual(0);
@@ -97,7 +98,7 @@ public class HttpMessageTest {
                 "[\"session_field:foo\", \"fooval2\"]" +
                 "]";
 
-        HttpMessage m = new HttpMessage(json);
+        HttpMessage m = HttpMessages.parse(json);
         m.sort_details();
         expect(m.custom_fields().size()).toEqual(1);
         expect(m.custom_fields().get(0).get(0)).toEqual("foo");
@@ -137,7 +138,7 @@ public class HttpMessageTest {
     @Test
     public void parseZeroIntervalJsonTest() {
         String json = "[[\"interval\", \"0.836995\"]]";
-        HttpMessage m = new HttpMessage(json);
+        HttpMessage m = HttpMessages.parse(json);
         expect(m.interval_millis()).toEqual(1);
     }
 

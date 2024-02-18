@@ -51,7 +51,7 @@ public class MessageFileReader implements AutoCloseable, Closeable {
      * Parses and processes all messages in file.
      */
     public void parse(MessageProcessor processor) {
-        iterate(line -> processor.process(new HttpMessage(line)));
+        iterate(line -> processor.process(HttpMessages.parse(line)));
     }
 
     private final String file;

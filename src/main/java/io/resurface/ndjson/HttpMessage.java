@@ -27,18 +27,6 @@ public class HttpMessage {
     }
 
     /**
-     * Parses message details from specified JSON.
-     */
-    public HttpMessage(String json) {
-        try {
-            ArrayList<ArrayList<String>> details = GSON.fromJson(json, GSON_ARRAYLIST_TYPE);
-            for (ArrayList<String> detail : details) add(detail);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid json message", e);
-        }
-    }
-
-    /**
      * Adds detail as two-entry key/value list.
      */
     public void add(ArrayList<String> detail) {
@@ -606,9 +594,8 @@ public class HttpMessage {
     private String request_address;
     private final List<ArrayList<String>> session_fields = new ArrayList<>();
 
-    private static final Comparator<ArrayList<String>> COMPARATOR = Comparator.comparing(e -> e.get(0));
-    private static final Gson GSON = new Gson();
-    private static final Type GSON_ARRAYLIST_TYPE = new TypeToken<ArrayList<ArrayList<String>>>() {
-    }.getType();
+    static final Comparator<ArrayList<String>> COMPARATOR = Comparator.comparing(e -> e.get(0));
+    static final Gson GSON = new Gson();
+    static final Type GSON_ARRAYLIST_TYPE = new TypeToken<ArrayList<ArrayList<String>>>() {}.getType();
 
 }
