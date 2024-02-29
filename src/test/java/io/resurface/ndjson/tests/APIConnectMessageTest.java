@@ -128,7 +128,7 @@ public class APIConnectMessageTest {
         // todo additional checks here
 
         // check host
-        expect(m.host()).toEqual("172.17.24.166");
+        expect(m.host()).toBeNull();
 
         // check interval millis
         expect(m.interval_millis()).toEqual(157);

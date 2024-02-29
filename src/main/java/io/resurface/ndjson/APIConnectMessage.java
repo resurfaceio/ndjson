@@ -180,9 +180,6 @@ public class APIConnectMessage {
             }
         }
 
-        // copy host
-        if (msg.host() != null) host = msg.host();
-
         // copy interval millis
         if (msg.interval_millis() > 0) timeToServeRequest = String.valueOf(msg.interval_millis());
 
@@ -219,6 +216,7 @@ public class APIConnectMessage {
         if (msg.request_url() != null) {
             try {
                 URL url = new URL(msg.request_url());
+                host = url.getHost();
                 requestProtocol = url.getProtocol();
                 uriPath = url.getPath();
             } catch (MalformedURLException mue) {
@@ -270,9 +268,6 @@ public class APIConnectMessage {
         if (transactionId != null) msg.add_custom_field("transaction_id", transactionId);
         if (version != null) msg.add_custom_field("version", version);
 
-        // copy host
-        if (host != null) msg.set_host(host);
-
         // copy interval millis
         if (timeToServeRequest != null) msg.set_interval_millis(Long.parseLong(timeToServeRequest));
 
@@ -304,7 +299,12 @@ public class APIConnectMessage {
         }
 
         // copy request url
-        msg.set_request_url(requestProtocol + "://" + host + uriPath);
+        StringBuilder s = new StringBuilder();
+        if (requestProtocol != null) s.append(requestProtocol);
+        s.append("://");
+        if (host != null) s.append(host);
+        if (uriPath != null) s.append(uriPath);
+        msg.set_request_url(s.toString());
 
         // copy response body
         if (responseBody != null) msg.set_response_body(responseBody);
