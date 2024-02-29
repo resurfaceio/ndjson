@@ -162,6 +162,8 @@ public class APIConnectMessage {
                         immediateClientIp = d.get(1); break;
                     case "log_policy":
                         logPolicy = d.get(1); break;
+                    case "org_id":
+                        orgId = d.get(1); break;
                     case "org_name":
                         orgName = d.get(1); break;
                     case "product_name":
@@ -204,10 +206,10 @@ public class APIConnectMessage {
         if (msg.request_params() != null) {
             StringBuilder s = new StringBuilder();
             for (ArrayList<String> d : msg.request_params()) {
-                if (s.length() > 0) s.append("&");
+                if (!s.isEmpty()) s.append("&");
                 s.append(d.get(0));
-                s.append("=");
-                s.append(d.get(1));
+                String value = d.get(1);
+                s.append(value.isEmpty() ? "" : "=" + value);
             }
             queryString = s.toString();
         }
@@ -260,6 +262,7 @@ public class APIConnectMessage {
         if (globalTransactionId != null) msg.add_custom_field("global_transaction_id", globalTransactionId);
         if (immediateClientIp != null) msg.add_custom_field("immediate_client_ip", immediateClientIp);
         if (logPolicy != null) msg.add_custom_field("log_policy", logPolicy);
+        if (orgId != null) msg.add_custom_field("org_id", orgId);
         if (orgName != null) msg.add_custom_field("org_name", orgName);
         if (productName != null) msg.add_custom_field("product_name", productName);
         if (planId != null) msg.add_custom_field("plan_id", planId);

@@ -14,117 +14,34 @@ import static com.mscharhag.oleaster.matcher.Matchers.expect;
  */
 public class APIConnectMessageTest {
 
-    public static String JSON = """
-            {
-              "response_body": "{\\"data\\":\\"This is some MORE data!!\\"}",
-              "status_code": "200 OK",
-              "product_name": "N/A",
-              "endpoint_url": "N/A",
-              "tags": [ "apicapievent" ],
-              "org_id": "b18c6e24-8b0c-45db-b9d6-d3b2ee070b18",
-              "resource_id": "::POST:/",
-              "global_transaction_id": "58665d8063a1e26c000099d0",
-              "request_http_headers": [
-                {
-                  "Host": "apis-minimum-gw-gateway-cp4i.b-vpc-cluster-56665e2c7fa43d098323a9b3845292d3-0000.us-south.containers.appdomain.cloud"
-                },
-                { "user-agent": "curl/7.81.0" },
-                { "accept": "*/*" },
-                { "foo": "baz" },
-                { "content-type": "application/json" },
-                { "content-length": "30" }
-              ],
-              "datetime": "2022-12-20T16:27:24.629Z",
-              "api_id": "53cc83a7-ab06-49a7-a602-7df5ed3d069d",
-              "catalog_name": "sandbox",
-              "host": "172.17.24.166",
-              "@timestamp": "2022-12-20T16:27:25.151Z",
-              "immediate_client_ip": "172.17.61.204",
-              "plan_name": "N/A",
-              "transaction_id": "39376",
-              "plan_id": "",
-              "bytes_sent": "876",
-              "api_version": "1.0.0",
-              "bytes_received": "30",
-              "domain_name": "apiconnect",
-              "@version": "1",
-              "http_user_agent": "curl/7.81.0",
-              "api_name": "http-bin",
-              "developer_org_title": "",
-              "developer_org_id": "",
-              "client_id": "",
-              "org_name": "resurface",
-              "query_string": "crash=course",
-              "time_to_serve_request": "157",
-              "latency_info": [
-                { "task": "Start", "started": "0" },
-                { "task": "api-routing", "started": "0" },
-                { "task": "api-cors", "started": "0" },
-                { "task": "api-client-identification", "started": "0" },
-                { "task": "assembly-ratelimit", "started": "0" },
-                { "task": "api-security", "started": "0" },
-                { "task": "assembly-function-call", "started": "0" },
-                { "task": "api-execute", "started": "1" },
-                { "task": "assembly-invoke", "started": "1" }
-              ],
-              "app_name": "N/A",
-              "opentracing_info": [],
-              "billing": {
-                "trial_period_days": 0,
-                "provider": "none",
-                "currency": "USD",
-                "amount": 0,
-                "model": "free"
-              },
-              "gateway_ip": "172.17.35.32",
-              "uri_path": "/resurface/sandbox/post",
-              "developer_org_name": "",
-              "request_method": "POST",
-              "log_policy": "payload",
-              "catalog_id": "b6bf2ef0-672a-46d1-b78b-eac10998ae31",
-              "headers": {
-                "request_path": "/x2020/v1/apievent/_bulk",
-                "content_type": "application/json",
-                "http_version": "HTTP/1.0",
-                "http_user_agent": null,
-                "connection": "close",
-                "request_method": "POST",
-                "http_host": "apis-minim-4d83af8f-ingestion-https",
-                "http_accept": null,
-                "content_length": "2849"
-              },
-              "request_body": "{\\"data\\":\\"This is some data!!\\"}",
-              "client_ip": "172.17.61.204",
-              "response_http_headers": [
-                { "Date": "Tue, 20 Dec 2022 16:27:24 GMT" },
-                { "Content-Type": "application/JSON" },
-                { "Content-Length": "876" },
-                { "Server": "gunicorn/19.9.0" },
-                { "Access-Control-Allow-Origin": "*" },
-                { "Access-Control-Allow-Credentials": "true" }
-              ],
-              "resource_path": "POST",
-              "request_protocol": "https"
-            }
-            """;
-
     @Test
     public void parseAndCopyTest() {
-        HttpMessage m = HttpMessages.parse(JSON, "ibm");
-        checkMessage(m);
+        String[] Messages = Helper.APIConnect.getMessages();
+        for (String Message : Messages) {
+            // parse dialect-specific JSON into HttpMessage
+            HttpMessage m = HttpMessages.parse(Message, "ibm");
+            checkMessage(m);
 
-        APIConnectMessage a = new APIConnectMessage(m);
-        checkMessage(a);
+            // copy from HttpMessage (to APIConnectMessage)
+            APIConnectMessage a = new APIConnectMessage(m);
+            checkMessage(a);
 
-        HttpMessage m2 = HttpMessages.parse(a.toString(), "ibm");
-        checkMessage(m2);
+            // copy to HttpMessage (from APIConnectMessage) directly
+            HttpMessage m2 = new HttpMessage();
+            a.copyTo(m2);
+            checkMessage(m2);
+
+            // copy to HttpMessage through HttpMessages::parse
+            HttpMessage m3 = HttpMessages.parse(a.toString(), "ibm");
+            checkMessage(m3);
+        }
     }
 
     private void checkMessage(HttpMessage m) {
         m.sort_details();
 
         // check custom fields
-        expect(m.custom_fields().size()).toEqual(21);
+        expect(m.custom_fields().size()).toEqual(22);
         // todo additional checks here
 
         // check host
