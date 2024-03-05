@@ -214,11 +214,17 @@ public class APIConnectMessage {
             queryString = s.toString();
         }
 
+        // copy host (machine hostname -- unused in 3.6)
+        if (msg.host() != null) host = msg.host();
+
         // copy request url
         if (msg.request_url() != null) {
             try {
                 URL url = new URL(msg.request_url());
-                host = url.getHost();
+                String urlHost = url.getHost();
+                if ((host == null || !host.equalsIgnoreCase(urlHost)) && (gatewayIp == null || !gatewayIp.equalsIgnoreCase(urlHost))) {
+                    requestHttpHeaders.add(Collections.singletonMap("host", urlHost));
+                }
                 requestProtocol = url.getProtocol();
                 uriPath = url.getPath();
             } catch (MalformedURLException mue) {
@@ -280,10 +286,15 @@ public class APIConnectMessage {
         // copy request body
         if (requestBody != null) msg.set_request_body(requestBody);
 
+        // copy host (machine hostname -- unused in 3.6)
+        if (host != null) msg.set_host(host);
+
+        String hostHeader = null;
         // copy request headers
         if ((requestHttpHeaders != null) && !requestHttpHeaders.isEmpty()) {
             for (Map<String, String> header : requestHttpHeaders) {
                 for (String key : header.keySet()) {
+                    if (key.equalsIgnoreCase("host")) hostHeader = header.get(key);
                     msg.add_request_header(key, header.get(key));
                 }
             }
@@ -305,7 +316,13 @@ public class APIConnectMessage {
         StringBuilder s = new StringBuilder();
         if (requestProtocol != null) s.append(requestProtocol);
         s.append("://");
-        if (host != null) s.append(host);
+        if (hostHeader != null) {
+            s.append(hostHeader);
+        } else if (gatewayIp != null) {
+            s.append(gatewayIp);
+        } else if (host != null) {
+            s.append(host);
+        }
         if (uriPath != null) s.append(uriPath);
         msg.set_request_url(s.toString());
 
