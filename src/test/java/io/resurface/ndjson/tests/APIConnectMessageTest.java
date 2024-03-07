@@ -41,7 +41,7 @@ public class APIConnectMessageTest {
         m.sort_details();
 
         // check custom fields
-        expect(m.custom_fields().size()).toEqual(22);
+        expect(m.custom_fields().size()).toEqual(23);
         // todo additional checks here
 
         // check host
@@ -58,15 +58,13 @@ public class APIConnectMessageTest {
 
         // check request headers
         expect(m.request_content_type()).toEqual("application/json");
-        expect(m.request_headers().size()).toEqual(4);
+        expect(m.request_headers().size()).toEqual(3);
         expect(m.request_headers().get(0).get(0)).toEqual("accept");
         expect(m.request_headers().get(0).get(1)).toEqual("*/*");
         expect(m.request_headers().get(1).get(0)).toEqual("content-length");
         expect(m.request_headers().get(1).get(1)).toEqual("30");
         expect(m.request_headers().get(2).get(0)).toEqual("foo");
         expect(m.request_headers().get(2).get(1)).toEqual("baz");
-        expect(m.request_headers().get(3).get(0)).toEqual("host");
-        expect(m.request_headers().get(3).get(1)).toEqual("apis-minimum-gw-gateway-cp4i.b-vpc-cluster-56665e2c7fa43d098323a9b3845292d3-0000.us-south.containers.appdomain.cloud");
         expect(m.request_user_agent()).toEqual("curl/7.81.0");
 
         // check request method
@@ -78,7 +76,7 @@ public class APIConnectMessageTest {
         expect(m.request_params().get(0).get(1)).toEqual("course");
 
         // check request url
-        expect(m.request_url()).toEqual("https://172.17.24.166/resurface/sandbox/post");
+        expect(m.request_url()).toEqual("https://apis-minimum-gw-gateway-cp4i.b-vpc.us-south.containers.appdomain.cloud/resurface/sandbox/post");
 
         // check response body
         expect(m.response_body()).toEqual("{\"data\":\"This is some MORE data!!\"}");
@@ -127,9 +125,9 @@ public class APIConnectMessageTest {
         expect(m.requestHttpHeaders.get(0).get("accept")).toEqual("*/*");
         expect(m.requestHttpHeaders.get(1).get("content-length")).toEqual("30");
         expect(m.requestHttpHeaders.get(2).get("foo")).toEqual("baz");
-        expect(m.requestHttpHeaders.get(3).get("host")).toEqual("apis-minimum-gw-gateway-cp4i.b-vpc-cluster-56665e2c7fa43d098323a9b3845292d3-0000.us-south.containers.appdomain.cloud");
-        expect(m.requestHttpHeaders.get(4).get("content-type")).toEqual("application/json");
-        expect(m.requestHttpHeaders.get(5).get("user-agent")).toEqual("curl/7.81.0");
+        expect(m.requestHttpHeaders.get(3).get("content-type")).toEqual("application/json");
+        expect(m.requestHttpHeaders.get(4).get("user-agent")).toEqual("curl/7.81.0");
+        expect(m.requestHttpHeaders.get(5).get("host")).toEqual("apis-minimum-gw-gateway-cp4i.b-vpc.us-south.containers.appdomain.cloud");
 
         // check request method
         expect(m.method).toEqual("POST");

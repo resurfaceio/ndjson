@@ -82,6 +82,7 @@ public class HttpMessageTest {
                 "[\"request_body\", \"{ \\\"hello\\\" : \\\"world\\\" }\"]," +
                 "[\"request_header:a\", \"2\"]," +
                 "[\"request_header:b\", \"1\"]," +
+                "[\"request_header:host\", \"test.pepperin.space\"]," +
                 "[\"request_header:content-type\", \"Application/JSON\"]," +
                 "[\"request_header:user-agent\",\"Mozilla/5.0 (Ubuntu)...\"]," +
                 "[\"request_header:x-forwarded-for\", \"127.0.0.1\"]," +
@@ -103,7 +104,7 @@ public class HttpMessageTest {
         expect(m.custom_fields().size()).toEqual(1);
         expect(m.custom_fields().get(0).get(0)).toEqual("foo");
         expect(m.custom_fields().get(0).get(1)).toEqual("Bar");
-        expect(m.host()).toEqual("radware");
+        expect(m.host()).toBeNull();
         expect(m.interval_millis()).toEqual(292);
         expect(m.request_address()).toEqual("127.0.0.1");
         expect(m.request_body()).toEqual("{ \"hello\" : \"world\" }");
@@ -156,7 +157,11 @@ public class HttpMessageTest {
         m.set_host("radware");
         expect(m.size_request_bytes()).toEqual(0);
         expect(m.size_response_bytes()).toEqual(0);
-        expect(m.toString()).toEqual("[[\"host\",\"radware\"]]");
+        expect(m.toString()).toEqual("[]");
+        m.add_custom_field("host", "radware");
+        expect(m.size_request_bytes()).toEqual(0);
+        expect(m.size_response_bytes()).toEqual(0);
+        expect(m.toString()).toEqual("[[\"custom_field:host\",\"radware\"]]");
     }
 
     @Test

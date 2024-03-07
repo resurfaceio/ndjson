@@ -158,6 +158,8 @@ public class APIConnectMessage {
                         gatewayIp = d.get(1); break;
                     case "global_transaction_id":
                         globalTransactionId = d.get(1); break;
+                    case "host":
+                        host = d.get(1); break;
                     case "immediate_client_ip":
                         immediateClientIp = d.get(1); break;
                     case "log_policy":
@@ -218,7 +220,10 @@ public class APIConnectMessage {
         if (msg.request_url() != null) {
             try {
                 URL url = new URL(msg.request_url());
-                host = url.getHost();
+                String urlHost = url.getHost();
+                if ((host == null || !host.equalsIgnoreCase(urlHost)) && (gatewayIp == null || !gatewayIp.equalsIgnoreCase(urlHost))) {
+                    requestHttpHeaders.add(Collections.singletonMap("host", urlHost));
+                }
                 requestProtocol = url.getProtocol();
                 uriPath = url.getPath();
             } catch (MalformedURLException mue) {
@@ -260,6 +265,7 @@ public class APIConnectMessage {
         if (developerOrgTitle != null) msg.add_custom_field("developer_org_title", developerOrgTitle);
         if (gatewayIp != null) msg.add_custom_field("gateway_ip", gatewayIp);
         if (globalTransactionId != null) msg.add_custom_field("global_transaction_id", globalTransactionId);
+        if (host != null) msg.add_custom_field("host", host);
         if (immediateClientIp != null) msg.add_custom_field("immediate_client_ip", immediateClientIp);
         if (logPolicy != null) msg.add_custom_field("log_policy", logPolicy);
         if (orgId != null) msg.add_custom_field("org_id", orgId);
@@ -280,10 +286,12 @@ public class APIConnectMessage {
         // copy request body
         if (requestBody != null) msg.set_request_body(requestBody);
 
+        String hostHeader = null;
         // copy request headers
         if ((requestHttpHeaders != null) && !requestHttpHeaders.isEmpty()) {
             for (Map<String, String> header : requestHttpHeaders) {
                 for (String key : header.keySet()) {
+                    if (key.equalsIgnoreCase("host")) hostHeader = header.get(key);
                     msg.add_request_header(key, header.get(key));
                 }
             }
@@ -305,7 +313,13 @@ public class APIConnectMessage {
         StringBuilder s = new StringBuilder();
         if (requestProtocol != null) s.append(requestProtocol);
         s.append("://");
-        if (host != null) s.append(host);
+        if (hostHeader != null) {
+            s.append(hostHeader);
+        } else if (gatewayIp != null) {
+            s.append(gatewayIp);
+        } else if (host != null) {
+            s.append(host);
+        }
         if (uriPath != null) s.append(uriPath);
         msg.set_request_url(s.toString());
 

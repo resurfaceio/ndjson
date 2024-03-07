@@ -20,7 +20,7 @@ public class Helper {
               "global_transaction_id": "58665d8063a1e26c000099d0",
               "request_http_headers": [
                 {
-                  "Host": "apis-minimum-gw-gateway-cp4i.b-vpc-cluster-56665e2c7fa43d098323a9b3845292d3-0000.us-south.containers.appdomain.cloud"
+                  "Host": "apis-minimum-gw-gateway-cp4i.b-vpc.us-south.containers.appdomain.cloud"
                 },
                 { "user-agent": "curl/7.81.0" },
                 { "accept": "*/*" },
