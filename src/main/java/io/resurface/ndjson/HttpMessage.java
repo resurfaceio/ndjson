@@ -42,7 +42,10 @@ public class HttpMessage {
     public void add(String key, String value) {
         switch (key) {
             case "host":
-                host = value;
+                // "host" field has been deprecated since 3.5
+                // request host must be sent as part of request_url
+                // machine host must be sent as a custom_field:host value
+//                host = value;
                 break;
             case "interval":
             case "interval_millis":
@@ -214,7 +217,10 @@ public class HttpMessage {
      * Sets the host that responded to the API call.
      */
     public void set_host(String host) {
-        this.host = host;
+        // "host" field has been deprecated since 3.5
+        // request host must be sent as part of request_url
+        // machine host must be sent as a custom_field:host value
+        //this.host = host;
     }
 
     /**

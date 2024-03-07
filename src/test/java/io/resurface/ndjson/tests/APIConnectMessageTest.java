@@ -41,11 +41,11 @@ public class APIConnectMessageTest {
         m.sort_details();
 
         // check custom fields
-        expect(m.custom_fields().size()).toEqual(22);
+        expect(m.custom_fields().size()).toEqual(23);
         // todo additional checks here
 
         // check host
-        expect(m.host()).toEqual("172.17.24.166");
+        expect(m.host()).toBeNull();
 
         // check interval millis
         expect(m.interval_millis()).toEqual(157);

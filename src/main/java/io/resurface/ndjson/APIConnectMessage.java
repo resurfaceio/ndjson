@@ -158,6 +158,8 @@ public class APIConnectMessage {
                         gatewayIp = d.get(1); break;
                     case "global_transaction_id":
                         globalTransactionId = d.get(1); break;
+                    case "host":
+                        host = d.get(1); break;
                     case "immediate_client_ip":
                         immediateClientIp = d.get(1); break;
                     case "log_policy":
@@ -214,9 +216,6 @@ public class APIConnectMessage {
             queryString = s.toString();
         }
 
-        // copy host (machine hostname -- unused in 3.6)
-        if (msg.host() != null) host = msg.host();
-
         // copy request url
         if (msg.request_url() != null) {
             try {
@@ -266,6 +265,7 @@ public class APIConnectMessage {
         if (developerOrgTitle != null) msg.add_custom_field("developer_org_title", developerOrgTitle);
         if (gatewayIp != null) msg.add_custom_field("gateway_ip", gatewayIp);
         if (globalTransactionId != null) msg.add_custom_field("global_transaction_id", globalTransactionId);
+        if (host != null) msg.add_custom_field("host", host);
         if (immediateClientIp != null) msg.add_custom_field("immediate_client_ip", immediateClientIp);
         if (logPolicy != null) msg.add_custom_field("log_policy", logPolicy);
         if (orgId != null) msg.add_custom_field("org_id", orgId);
@@ -285,9 +285,6 @@ public class APIConnectMessage {
 
         // copy request body
         if (requestBody != null) msg.set_request_body(requestBody);
-
-        // copy host (machine hostname -- unused in 3.6)
-        if (host != null) msg.set_host(host);
 
         String hostHeader = null;
         // copy request headers
