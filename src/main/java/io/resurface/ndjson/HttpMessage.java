@@ -42,10 +42,8 @@ public class HttpMessage {
     public void add(String key, String value) {
         switch (key) {
             case "host":
-                // "host" field has been deprecated since 3.5
+                // host detail has been deprecated since 3.5
                 // request host must be sent as part of request_url
-                // machine host must be sent as a custom_field:host value
-//                host = value;
                 break;
             case "interval":
             case "interval_millis":
@@ -107,7 +105,7 @@ public class HttpMessage {
         String name_lower = name.toLowerCase();
         switch (name_lower) {
             case "host":
-                break;
+                break; // dropped since 3.6
             case "content-type":
                 request_content_type = value;
                 break;
@@ -209,18 +207,20 @@ public class HttpMessage {
     /**
      * Returns the host that responded to the API call.
      */
+    @Deprecated
     public String host() {
-        return host;
+        // host detail has been deprecated since 3.5
+        // request host must be sent as part of request_url
+        return null;
     }
 
     /**
      * Sets the host that responded to the API call.
      */
+    @Deprecated
     public void set_host(String host) {
-        // "host" field has been deprecated since 3.5
+        // host detail has been deprecated since 3.5
         // request host must be sent as part of request_url
-        // machine host must be sent as a custom_field:host value
-        //this.host = host;
     }
 
     /**
@@ -535,7 +535,6 @@ public class HttpMessage {
             writer.beginArray();
 
             // v2 details
-            if (host != null) write(writer, "host", host);
             if (interval_millis != 0) write(writer, "interval", interval_millis);
             if (request_body != null) write(writer, "request_body", request_body);
             if (request_content_type != null) write(writer, "request_header:content-type", request_content_type);
@@ -582,7 +581,6 @@ public class HttpMessage {
     }
 
     // v2 details
-    private String host;
     private long interval_millis;
     private String request_body;
     private String request_content_type;
