@@ -109,11 +109,13 @@ public class HttpMessageTest {
         expect(m.request_address()).toEqual("127.0.0.1");
         expect(m.request_body()).toEqual("{ \"hello\" : \"world\" }");
         expect(m.request_content_type()).toEqual("Application/JSON");
-        expect(m.request_headers().size()).toEqual(2);
+        expect(m.request_headers().size()).toEqual(3);
         expect(m.request_headers().get(0).get(0)).toEqual("a");
         expect(m.request_headers().get(0).get(1)).toEqual("2");
         expect(m.request_headers().get(1).get(0)).toEqual("b");
         expect(m.request_headers().get(1).get(1)).toEqual("1");
+        expect(m.request_headers().get(2).get(0)).toEqual("host");
+        expect(m.request_headers().get(2).get(1)).toEqual("test.pepperin.space");
         expect(m.request_method()).toEqual("POST");
         expect(m.request_params().size()).toEqual(2);
         expect(m.request_params().get(0).get(0)).toEqual("p1");

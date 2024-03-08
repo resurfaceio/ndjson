@@ -104,8 +104,6 @@ public class HttpMessage {
     public void add_request_header(String name, String value) {
         String name_lower = name.toLowerCase();
         switch (name_lower) {
-            case "host":
-                break; // dropped since 3.6
             case "content-type":
                 request_content_type = value;
                 break;

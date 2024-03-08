@@ -194,9 +194,14 @@ public class APIConnectMessage {
         if (msg.request_body() != null) requestBody = msg.request_body();
 
         // copy request headers
+        boolean hostHeaderExists = false;
         requestHttpHeaders = new ArrayList<>();
         if (msg.request_headers() != null) {
-            for (ArrayList<String> d : msg.request_headers()) requestHttpHeaders.add(Collections.singletonMap(d.get(0), d.get(1)));
+            for (ArrayList<String> d : msg.request_headers()) {
+                String key = d.get(0);
+                if (key.equalsIgnoreCase("host")) hostHeaderExists = true;
+                requestHttpHeaders.add(Collections.singletonMap(key, d.get(1)));
+            }
         }
         if (msg.request_content_type() != null) requestHttpHeaders.add(Collections.singletonMap("content-type", msg.request_content_type()));
         if (msg.request_user_agent() != null) requestHttpHeaders.add(Collections.singletonMap("user-agent", msg.request_user_agent()));
@@ -221,7 +226,7 @@ public class APIConnectMessage {
             try {
                 URL url = new URL(msg.request_url());
                 String urlHost = url.getHost();
-                if ((host == null || !host.equalsIgnoreCase(urlHost)) && (gatewayIp == null || !gatewayIp.equalsIgnoreCase(urlHost))) {
+                if ((!hostHeaderExists) && (host == null || !host.equalsIgnoreCase(urlHost)) && (gatewayIp == null || !gatewayIp.equalsIgnoreCase(urlHost))) {
                     requestHttpHeaders.add(Collections.singletonMap("host", urlHost));
                 }
                 requestProtocol = url.getProtocol();
