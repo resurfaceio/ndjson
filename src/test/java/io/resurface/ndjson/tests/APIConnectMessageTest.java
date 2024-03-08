@@ -5,6 +5,7 @@ package io.resurface.ndjson.tests;
 import io.resurface.ndjson.APIConnectMessage;
 import io.resurface.ndjson.HttpMessage;
 import io.resurface.ndjson.HttpMessages;
+import io.resurface.ndjson.tests.Helper.*;
 import org.junit.Test;
 
 import static com.mscharhag.oleaster.matcher.Matchers.expect;
@@ -16,7 +17,7 @@ public class APIConnectMessageTest {
 
     @Test
     public void parseAndCopyTest() {
-        String[] Messages = Helper.APIConnect.getMessages();
+        String[] Messages = APIConnect.getMessages();
         for (String Message : Messages) {
             // parse dialect-specific JSON into HttpMessage
             HttpMessage m = HttpMessages.parse(Message, "ibm");
@@ -35,6 +36,246 @@ public class APIConnectMessageTest {
             HttpMessage m3 = HttpMessages.parse(a.toString(), "ibm");
             checkMessage(m3);
         }
+    }
+
+    @Test
+    public void parseAndCopyHostSourcesTest() {
+        HttpMessage m = HttpMessages.parse(APIConnect.DifferentHostSources, "ibm");
+        ExpectedHostFields expectedFields = new ExpectedHostFields(
+                "api.us-east-a.apiconnect.ibmappdomain.cloud",
+                "172.21.28.193",
+                "172.21.8.172"
+        );
+        checkShortMessage(m, "api.us-east-a.apiconnect.ibmappdomain.cloud", expectedFields);
+
+        APIConnectMessage a = new APIConnectMessage(m);
+        checkShortMessage(a, expectedFields);
+
+        HttpMessage m2 = new HttpMessage();
+        a.copyTo(m2);
+        checkShortMessage(m2, "api.us-east-a.apiconnect.ibmappdomain.cloud", expectedFields);
+
+        HttpMessage m3 = HttpMessages.parse(a.toString(), "ibm");
+        checkShortMessage(m3, "api.us-east-a.apiconnect.ibmappdomain.cloud", expectedFields);
+
+        a = new APIConnectMessage();
+        a.copyFrom(m);
+        checkShortMessage(a, expectedFields);
+
+
+        m = HttpMessages.parse(APIConnect.EqualHostSources, "ibm");
+        expectedFields = new ExpectedHostFields(
+                "192.168.0.123",
+                "192.168.0.123",
+                "192.168.0.123"
+        );
+        checkShortMessage(m,"192.168.0.123", expectedFields);
+
+        a = new APIConnectMessage(m);
+        checkShortMessage(a, expectedFields);
+
+        m2 = new HttpMessage();
+        a.copyTo(m2);
+        checkShortMessage(m2, "192.168.0.123", expectedFields);
+
+        m3 = HttpMessages.parse(a.toString(), "ibm");
+        checkShortMessage(m3, "192.168.0.123", expectedFields);
+
+        a = new APIConnectMessage();
+        a.copyFrom(m);
+        checkShortMessage(a, expectedFields);
+
+
+        m = HttpMessages.parse(APIConnect.EqualSourcesDifferentHostHeader, "ibm");
+        expectedFields = new ExpectedHostFields(
+                "192.168.0.123:9443",
+                "192.168.0.123",
+                "192.168.0.123"
+        );
+        checkShortMessage(m, "192.168.0.123:9443", expectedFields);
+
+        a = new APIConnectMessage(m);
+        checkShortMessage(a, expectedFields);
+
+        m2 = new HttpMessage();
+        a.copyTo(m2);
+        checkShortMessage(m2, "192.168.0.123:9443", expectedFields);
+
+        m3 = HttpMessages.parse(a.toString(), "ibm");
+        checkShortMessage(m3, "192.168.0.123:9443", expectedFields);
+
+        a = new APIConnectMessage();
+        a.copyFrom(m);
+        checkShortMessage(a, expectedFields);
+
+
+        m = HttpMessages.parse(APIConnect.EqualSourcesNoHostHeader, "ibm");
+        expectedFields = new ExpectedHostFields(
+                null,
+                "192.168.0.123",
+                "192.168.0.123"
+        );
+        checkShortMessage(m, "192.168.0.123", expectedFields);
+
+        a = new APIConnectMessage(m);
+        checkShortMessage(a, expectedFields);
+
+        m2 = new HttpMessage();
+        a.copyTo(m2);
+        checkShortMessage(m2, "192.168.0.123", expectedFields);
+
+        m3 = HttpMessages.parse(a.toString(), "ibm");
+        checkShortMessage(m3, "192.168.0.123", expectedFields);
+
+        a = new APIConnectMessage();
+        a.copyFrom(m);
+        checkShortMessage(a, expectedFields);
+
+
+        m = HttpMessages.parse(APIConnect.DifferentSourcesNoHostHeader, "ibm");
+        expectedFields = new ExpectedHostFields(
+                null,
+                "192.168.0.123",
+                "172.21.8.172"
+        );
+        checkShortMessage(m, "192.168.0.123", expectedFields);
+
+        a = new APIConnectMessage(m);
+        checkShortMessage(a, expectedFields);
+
+        m2 = new HttpMessage();
+        a.copyTo(m2);
+        checkShortMessage(m2, "192.168.0.123", expectedFields);
+
+        m3 = HttpMessages.parse(a.toString(), "ibm");
+        checkShortMessage(m3, "192.168.0.123", expectedFields);
+
+        a = new APIConnectMessage();
+        a.copyFrom(m);
+        checkShortMessage(a, expectedFields);
+
+
+        m = HttpMessages.parse(APIConnect.OnlyMachineHostPresent, "ibm");
+        expectedFields = new ExpectedHostFields(
+                null,
+                null,
+                "172.21.8.172"
+        );
+        checkShortMessage(m, "172.21.8.172", expectedFields);
+
+        a = new APIConnectMessage(m);
+        checkShortMessage(a, expectedFields);
+
+        m2 = new HttpMessage();
+        a.copyTo(m2);
+        checkShortMessage(m2, "172.21.8.172", expectedFields);
+
+        m3 = HttpMessages.parse(a.toString(), "ibm");
+        checkShortMessage(m3, "172.21.8.172", expectedFields);
+
+        a = new APIConnectMessage();
+        a.copyFrom(m);
+        checkShortMessage(a, expectedFields);
+
+
+        m = HttpMessages.parse(APIConnect.OnlyGatewayIpPresent, "ibm");
+        expectedFields = new ExpectedHostFields(
+                null,
+                "192.168.0.123",
+                null
+        );
+        checkShortMessage(m, "192.168.0.123", expectedFields);
+
+        a = new APIConnectMessage(m);
+        checkShortMessage(a, expectedFields);
+
+        m2 = new HttpMessage();
+        a.copyTo(m2);
+        checkShortMessage(m2, "192.168.0.123", expectedFields);
+
+        m3 = HttpMessages.parse(a.toString(), "ibm");
+        checkShortMessage(m3, "192.168.0.123", expectedFields);
+
+        a = new APIConnectMessage();
+        a.copyFrom(m);
+        checkShortMessage(a, expectedFields);
+
+
+        m = HttpMessages.parse(APIConnect.OnlyHostHeaderPresent, "ibm");
+        expectedFields = new ExpectedHostFields(
+                "api.us-east-a.apiconnect.ibmappdomain.cloud",
+                null,
+                null
+        );
+        checkShortMessage(m, "api.us-east-a.apiconnect.ibmappdomain.cloud", expectedFields);
+
+        a = new APIConnectMessage(m);
+        checkShortMessage(a, expectedFields);
+
+        m2 = new HttpMessage();
+        a.copyTo(m2);
+        checkShortMessage(m2, "api.us-east-a.apiconnect.ibmappdomain.cloud", expectedFields);
+
+        m3 = HttpMessages.parse(a.toString(), "ibm");
+        checkShortMessage(m3, "api.us-east-a.apiconnect.ibmappdomain.cloud", expectedFields);
+
+        a = new APIConnectMessage();
+        a.copyFrom(m);
+        checkShortMessage(a, expectedFields);
+    }
+
+    private void checkShortMessage(HttpMessage m, String urlHost, ExpectedHostFields expected) {
+        final String formattedMessage = "[[\"request_header:accept\",\"*/*\"]%s,[\"request_url\",\"https://%s/myinstance/sandbox/get\"],[\"request_header:user-agent\",\"curl/8.4.0\"]%s%s]";
+        
+        String hostHeader = expected.hostHeader(); 
+        String machineHost = expected.machineHost();
+        String gatewayIp = expected.gatewayIp();
+                
+        m.sort_details();
+
+        expect(m.request_url()).toEqual(String.format("https://%s/myinstance/sandbox/get", urlHost));
+        expect(m.request_headers().size()).toEqual(1 + (hostHeader != null ? 1 : 0));
+        expect(m.request_headers().get(0).get(0)).toEqual("accept");
+        expect(m.request_headers().get(0).get(1)).toEqual("*/*");
+        if (hostHeader != null) {
+            expect(m.request_headers().get(1).get(0)).toEqual("host");
+            expect(m.request_headers().get(1).get(1)).toEqual(hostHeader);
+        }
+        expect(m.request_user_agent()).toEqual("curl/8.4.0");
+
+        expect(m.custom_fields().size()).toEqual((gatewayIp == null ? 0 : 1) + (machineHost == null ? 0 : 1));
+        if (gatewayIp != null) {
+            expect(m.custom_fields().get(0).get(0)).toEqual("gateway_ip");
+            expect(m.custom_fields().get(0).get(1)).toEqual(gatewayIp);
+        }
+        if (machineHost != null) {
+            expect(m.custom_fields().get(gatewayIp == null ? 0 : 1).get(0)).toEqual("host");
+            expect(m.custom_fields().get(gatewayIp == null ? 0 : 1).get(1)).toEqual(machineHost);
+        }
+
+        String hostHeaderDetail = hostHeader == null ? "" : String.format(",[\"request_header:host\",\"%s\"]", hostHeader);
+        String machineHostDetail = machineHost == null ? "" : String.format(",[\"custom_field:host\",\"%s\"]", machineHost);
+        String gatewayIpDetail = gatewayIp == null ? "" : String.format(",[\"custom_field:gateway_ip\",\"%s\"]", gatewayIp);
+
+        expect(m.toString()).toEqual(String.format(formattedMessage, hostHeaderDetail, urlHost, gatewayIpDetail, machineHostDetail));
+    }
+
+    private void checkShortMessage(APIConnectMessage m, ExpectedHostFields expected) {
+        String hostHeader = expected.hostHeader();
+        String machineHost = expected.machineHost();
+        String gatewayIp = expected.gatewayIp();
+
+        expect(m.host).toEqual(machineHost);
+
+        expect(m.requestProtocol).toEqual("https");
+        expect(m.uriPath).toEqual("/myinstance/sandbox/get");
+        expect(m.requestHttpHeaders.size()).toEqual(2 + (hostHeader == null ? 0 : 1));
+        expect(m.requestHttpHeaders.get(0).get("accept")).toEqual("*/*");
+        if (hostHeader != null) expect(m.requestHttpHeaders.get(1).get("host")).toEqual(hostHeader);
+        expect(m.requestHttpHeaders.get(1 + (hostHeader == null ? 0 : 1)).get("user-agent")).toEqual("curl/8.4.0");
+
+        expect(m.gatewayIp).toEqual(gatewayIp);
+
     }
 
     private void checkMessage(HttpMessage m) {

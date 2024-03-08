@@ -2,6 +2,7 @@ package io.resurface.ndjson.tests;
 
 public class Helper {
 
+    public record ExpectedHostFields(String hostHeader, String gatewayIp, String machineHost) {}
     public static class APIConnect {
 
         public static String[] getMessages() {
@@ -284,6 +285,111 @@ public class Helper {
             }
             
             """;
+
+        static final String DifferentHostSources = """
+                {
+                  "host":"172.21.8.172",
+                  "request_protocol": "https",
+                  "uri_path": "/myinstance/sandbox/get",
+                  "request_http_headers": [
+                    {"host":"api.us-east-a.apiconnect.ibmappdomain.cloud"},
+                    {"user-agent":"curl/8.4.0"},
+                    {"accept":"*/*"}
+                  ],
+                  "gateway_ip": "172.21.28.193"
+                }
+                """;
+
+        static final String EqualHostSources = """
+                {
+                  "host":"192.168.0.123",
+                  "request_protocol": "https",
+                  "uri_path": "/myinstance/sandbox/get",
+                  "request_http_headers": [
+                    {"Host":"192.168.0.123"},
+                    {"user-agent":"curl/8.4.0"},
+                    {"accept":"*/*"}
+                  ],
+                  "gateway_ip": "192.168.0.123"
+                }
+                """;
+
+        static final String EqualSourcesDifferentHostHeader = """
+                {
+                  "host":"192.168.0.123",
+                  "request_protocol": "https",
+                  "uri_path": "/myinstance/sandbox/get",
+                  "request_http_headers": [
+                    {"Host":"192.168.0.123:9443"},
+                    {"user-agent":"curl/8.4.0"},
+                    {"accept":"*/*"}
+                  ],
+                  "gateway_ip": "192.168.0.123"
+                }
+                """;
+
+        static final String EqualSourcesNoHostHeader = """
+                {
+                  "host":"192.168.0.123",
+                  "request_protocol": "https",
+                  "uri_path": "/myinstance/sandbox/get",
+                  "request_http_headers": [
+                    {"user-agent":"curl/8.4.0"},
+                    {"accept":"*/*"}
+                  ],
+                  "gateway_ip": "192.168.0.123"
+                }
+                """;
+
+        static final String DifferentSourcesNoHostHeader = """
+                {
+                  "host":"172.21.8.172",
+                  "request_protocol": "https",
+                  "uri_path": "/myinstance/sandbox/get",
+                  "request_http_headers": [
+                    {"user-agent":"curl/8.4.0"},
+                    {"accept":"*/*"}
+                  ],
+                  "gateway_ip": "192.168.0.123"
+                }
+                """;
+
+        static final String OnlyMachineHostPresent = """
+                {
+                  "host":"172.21.8.172",
+                  "request_protocol": "https",
+                  "uri_path": "/myinstance/sandbox/get",
+                  "request_http_headers": [
+                    {"user-agent":"curl/8.4.0"},
+                    {"accept":"*/*"}
+                  ]
+                }
+                """;
+
+        static final String OnlyGatewayIpPresent = """
+                {
+                  "request_protocol": "https",
+                  "uri_path": "/myinstance/sandbox/get",
+                  "request_http_headers": [
+                    {"user-agent":"curl/8.4.0"},
+                    {"accept":"*/*"}
+                  ],
+                  "gateway_ip": "192.168.0.123"
+                }
+                """;
+
+        static final String OnlyHostHeaderPresent = """
+                {
+                  "request_protocol": "https",
+                  "uri_path": "/myinstance/sandbox/get",
+                  "request_http_headers": [
+                    {"host":"api.us-east-a.apiconnect.ibmappdomain.cloud"},
+                    {"user-agent":"curl/8.4.0"},
+                    {"accept":"*/*"}
+                  ]
+                }
+                """;
+
     }
 
 }
