@@ -134,51 +134,51 @@ public class APIConnectMessage {
         if ((msg.custom_fields() != null)) {
             for (ArrayList<String> d : msg.custom_fields()) {
                 switch (d.get(0)) {
-                    case "api_id":
+                    case "ibm-api_id":
                         apiId = d.get(1); break;
-                    case "api_name":
+                    case "ibm-api_name":
                         apiName = d.get(1); break;
-                    case "api_version":
+                    case "ibm-api_version":
                         apiVersion = d.get(1); break;
-                    case "app_name":
+                    case "ibm-app_name":
                         appName = d.get(1); break;
-                    case "catalog_id":
+                    case "ibm-catalog_id":
                         catalogId = d.get(1); break;
-                    case "catalog_name":
+                    case "ibm-catalog_name":
                         catalogName = d.get(1); break;
-                    case "client_id":
+                    case "ibm-client_id":
                         clientId = d.get(1); break;
-                    case "developer_org_id":
+                    case "ibm-developer_org_id":
                         developerOrgId = d.get(1); break;
-                    case "developer_org_name":
+                    case "ibm-developer_org_name":
                         developerOrgName = d.get(1); break;
-                    case "developer_org_title":
+                    case "ibm-developer_org_title":
                         developerOrgTitle = d.get(1); break;
-                    case "gateway_ip":
+                    case "ibm-gateway_ip":
                         gatewayIp = d.get(1); break;
-                    case "global_transaction_id":
+                    case "ibm-global_transaction_id":
                         globalTransactionId = d.get(1); break;
-                    case "host":
+                    case "ibm-host":
                         host = d.get(1); break;
-                    case "immediate_client_ip":
+                    case "ibm-immediate_client_ip":
                         immediateClientIp = d.get(1); break;
-                    case "log_policy":
+                    case "ibm-log_policy":
                         logPolicy = d.get(1); break;
-                    case "org_id":
+                    case "ibm-org_id":
                         orgId = d.get(1); break;
-                    case "org_name":
+                    case "ibm-org_name":
                         orgName = d.get(1); break;
-                    case "product_name":
+                    case "ibm-product_name":
                         productName = d.get(1); break;
-                    case "plan_id":
+                    case "ibm-plan_id":
                         planId = d.get(1); break;
-                    case "plan_name":
+                    case "ibm-plan_name":
                         planName = d.get(1); break;
-                    case "resource_id":
+                    case "ibm-resource_id":
                         resourceId = d.get(1); break;
-                    case "transaction_id":
+                    case "ibm-transaction_id":
                         transactionId = d.get(1); break;
-                    case "version":
+                    case "ibm-version":
                         version = d.get(1); break;
                 }
             }
@@ -258,29 +258,29 @@ public class APIConnectMessage {
      */
     public void copyTo(HttpMessage msg) {
         // copy all custom fields
-        if (apiId != null) msg.add_custom_field("api_id", apiId);
-        if (apiName != null) msg.add_custom_field("api_name", apiName);
-        if (apiVersion != null) msg.add_custom_field("api_version", apiVersion);
-        if (appName != null) msg.add_custom_field("app_name", appName);
-        if (catalogId != null) msg.add_custom_field("catalog_id", catalogId);
-        if (catalogName != null) msg.add_custom_field("catalog_name", catalogName);
-        if (clientId != null) msg.add_custom_field("client_id", clientId);
-        if (developerOrgId != null) msg.add_custom_field("developer_org_id", developerOrgId);
-        if (developerOrgName != null) msg.add_custom_field("developer_org_name", developerOrgName);
-        if (developerOrgTitle != null) msg.add_custom_field("developer_org_title", developerOrgTitle);
-        if (gatewayIp != null) msg.add_custom_field("gateway_ip", gatewayIp);
-        if (globalTransactionId != null) msg.add_custom_field("global_transaction_id", globalTransactionId);
-        if (host != null) msg.add_custom_field("host", host);
-        if (immediateClientIp != null) msg.add_custom_field("immediate_client_ip", immediateClientIp);
-        if (logPolicy != null) msg.add_custom_field("log_policy", logPolicy);
-        if (orgId != null) msg.add_custom_field("org_id", orgId);
-        if (orgName != null) msg.add_custom_field("org_name", orgName);
-        if (productName != null) msg.add_custom_field("product_name", productName);
-        if (planId != null) msg.add_custom_field("plan_id", planId);
-        if (planName != null) msg.add_custom_field("plan_name", planName);
-        if (resourceId != null) msg.add_custom_field("resource_id", resourceId);
-        if (transactionId != null) msg.add_custom_field("transaction_id", transactionId);
-        if (version != null) msg.add_custom_field("version", version);
+        if (apiId != null) msg.add_custom_field("ibm-api_id", apiId);
+        if (apiName != null) msg.add_custom_field("ibm-api_name", apiName);
+        if (apiVersion != null) msg.add_custom_field("ibm-api_version", apiVersion);
+        if (appName != null) msg.add_custom_field("ibm-app_name", appName);
+        if (catalogId != null) msg.add_custom_field("ibm-catalog_id", catalogId);
+        if (catalogName != null) msg.add_custom_field("ibm-catalog_name", catalogName);
+        if (clientId != null) msg.add_custom_field("ibm-client_id", clientId);
+        if (developerOrgId != null) msg.add_custom_field("ibm-developer_org_id", developerOrgId);
+        if (developerOrgName != null) msg.add_custom_field("ibm-developer_org_name", developerOrgName);
+        if (developerOrgTitle != null) msg.add_custom_field("ibm-developer_org_title", developerOrgTitle);
+        if (gatewayIp != null) msg.add_custom_field("ibm-gateway_ip", gatewayIp);
+        if (globalTransactionId != null) msg.add_custom_field("ibm-global_transaction_id", globalTransactionId);
+        if (host != null) msg.add_custom_field("ibm-host", host);
+        if (immediateClientIp != null) msg.add_custom_field("ibm-immediate_client_ip", immediateClientIp);
+        if (logPolicy != null) msg.add_custom_field("ibm-log_policy", logPolicy);
+        if (orgId != null) msg.add_custom_field("ibm-org_id", orgId);
+        if (orgName != null) msg.add_custom_field("ibm-org_name", orgName);
+        if (productName != null) msg.add_custom_field("ibm-product_name", productName);
+        if (planId != null) msg.add_custom_field("ibm-plan_id", planId);
+        if (planName != null) msg.add_custom_field("ibm-plan_name", planName);
+        if (resourceId != null) msg.add_custom_field("ibm-resource_id", resourceId);
+        if (transactionId != null) msg.add_custom_field("ibm-transaction_id", transactionId);
+        if (version != null) msg.add_custom_field("ibm-version", version);
 
         // copy interval millis
         if (timeToServeRequest != null) msg.set_interval_millis(Long.parseLong(timeToServeRequest));
@@ -291,8 +291,8 @@ public class APIConnectMessage {
         // copy request body
         if (requestBody != null) msg.set_request_body(requestBody);
 
-        String hostHeader = null;
         // copy request headers
+        String hostHeader = null;
         if ((requestHttpHeaders != null) && !requestHttpHeaders.isEmpty()) {
             for (Map<String, String> header : requestHttpHeaders) {
                 for (String key : header.keySet()) {

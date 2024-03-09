@@ -245,17 +245,17 @@ public class APIConnectMessageTest {
 
         expect(m.custom_fields().size()).toEqual((gatewayIp == null ? 0 : 1) + (machineHost == null ? 0 : 1));
         if (gatewayIp != null) {
-            expect(m.custom_fields().get(0).get(0)).toEqual("gateway_ip");
+            expect(m.custom_fields().get(0).get(0)).toEqual("ibm-gateway_ip");
             expect(m.custom_fields().get(0).get(1)).toEqual(gatewayIp);
         }
         if (machineHost != null) {
-            expect(m.custom_fields().get(gatewayIp == null ? 0 : 1).get(0)).toEqual("host");
+            expect(m.custom_fields().get(gatewayIp == null ? 0 : 1).get(0)).toEqual("ibm-host");
             expect(m.custom_fields().get(gatewayIp == null ? 0 : 1).get(1)).toEqual(machineHost);
         }
 
         String hostHeaderDetail = hostHeader == null ? "" : String.format(",[\"request_header:host\",\"%s\"]", hostHeader);
-        String machineHostDetail = machineHost == null ? "" : String.format(",[\"custom_field:host\",\"%s\"]", machineHost);
-        String gatewayIpDetail = gatewayIp == null ? "" : String.format(",[\"custom_field:gateway_ip\",\"%s\"]", gatewayIp);
+        String machineHostDetail = machineHost == null ? "" : String.format(",[\"custom_field:ibm-host\",\"%s\"]", machineHost);
+        String gatewayIpDetail = gatewayIp == null ? "" : String.format(",[\"custom_field:ibm-gateway_ip\",\"%s\"]", gatewayIp);
 
         expect(m.toString()).toEqual(String.format(formattedMessage, hostHeaderDetail, urlHost, gatewayIpDetail, machineHostDetail));
     }
