@@ -12,11 +12,15 @@ provides a write interface to generate compatible NDJSON files or payloads progr
 
 ## Usage
 
-This library is used by the Resurface database, for parsing messages from loggers, and for writing export files.
+This library was originally designed for use by the Resurface database, for parsing messages from loggers, and for writing export files.
 
-This library is also used by the open source [importer](https://github.com/resurfaceio/importer) utility, which reads
-compressed NDJSON files and loads them into a remote Resurface database. This is a great example of reading and processing
-NDJSON files in Resurface format, and is completely open source.
+The test cases included with this project include examples of generating NDJSON files, and parsing JSON messages in Resurface and IBM dialects.
+
+This library is also used by the [importer](https://github.com/resurfaceio/importer) utility, which reads
+compressed NDJSON files and loads them into a remote Resurface database.
+
+This library is also used by the [simulator](https://github.com/resurfaceio/simulator) utility, which generates
+simulated batches of NDJSON messages and sends them to a remote Resurface database.
 
 ## Dependencies
 
