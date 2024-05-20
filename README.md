@@ -34,7 +34,7 @@ Simply add these sections to `pom.xml` to install:
 <dependency>
     <groupId>io.resurface</groupId>
     <artifactId>resurfaceio-ndjson</artifactId>
-    <version>3.6.4</version>
+    <version>3.6.5</version>
 </dependency>
 <dependency>
     <groupId>com.google.code.gson</groupId>
