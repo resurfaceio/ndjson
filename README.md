@@ -7,8 +7,9 @@ compatible logger, as well as parsing NDJSON files exported from the Resurface d
 provides a write interface to generate compatible NDJSON files or payloads programmatically.
 
 [![CodeFactor](https://www.codefactor.io/repository/github/resurfaceio/ndjson/badge)](https://www.codefactor.io/repository/github/resurfaceio/ndjson)
-[![License](https://img.shields.io/github/license/resurfaceio/ndjson)](https://github.com/resurfaceio/ndjson/blob/v3.6.x/LICENSE)
 [![Contributing](https://img.shields.io/badge/contributions-welcome-green.svg)](https://github.com/resurfaceio/ndjson/blob/v3.6.x/CONTRIBUTING.md)
+[![License](https://img.shields.io/github/license/resurfaceio/ndjson)](https://github.com/resurfaceio/ndjson/blob/v3.6.x/LICENSE)
+[![Hosted By: Cloudsmith](https://img.shields.io/badge/OSS%20hosting%20by-cloudsmith-blue?logo=cloudsmith&style=flat-square)](https://cloudsmith.io/~resurfaceio/repos/public/packages/)
 
 ## Usage
 
@@ -25,8 +26,8 @@ utilities, for loading data into a Resurface database.
 
 ## Installing with Maven
 
-⚠️ We publish our official binaries on [CloudSmith](https://cloudsmith.com) rather than Maven Central,
-because CloudSmith is awesome.
+⚠️ We publish our official binaries on [CloudSmith](https://cloudsmith.io/~resurfaceio/repos/public/packages/) rather than Maven Central,
+because CloudSmith is awesome and **free** for open-source projects.
 
 Simply add these sections to `pom.xml` to install:
 
