@@ -2,9 +2,10 @@
 Readers &amp; writers for Resurface NDJSON files
 
 This open source Java library makes it easy to parse or generate NDJSON payloads, streams, or compressed files in
-[Resurface JSON format](https://resurface.io/json.html). This library can be used to parse messages from any
-compatible logger, as well as parsing NDJSON files exported from the Resurface database. This library also
-provides a write interface to generate compatible NDJSON files or payloads programmatically.
+[Resurface JSON format](https://go2docs.graylog.org/apisecurity-current/json_format/json_format.htm).
+This library can be used to parse messages from any compatible logger, as well as parsing NDJSON files exported
+from the Resurface database. This library also provides a write interface to generate compatible NDJSON files
+or payloads programmatically.
 
 [![CodeFactor](https://www.codefactor.io/repository/github/resurfaceio/ndjson/badge)](https://www.codefactor.io/repository/github/resurfaceio/ndjson)
 [![Contributing](https://img.shields.io/badge/contributions-welcome-green.svg)](https://github.com/resurfaceio/ndjson/blob/v3.6.x/CONTRIBUTING.md)
