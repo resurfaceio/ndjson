@@ -41,7 +41,7 @@ Simply add these sections to `pom.xml` to install:
 <dependency>
     <groupId>com.google.code.gson</groupId>
     <artifactId>gson</artifactId>
-    <version>2.10.1</version>
+    <version>2.11.0</version>
 </dependency>
 ```
 
